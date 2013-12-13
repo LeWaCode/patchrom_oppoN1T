@@ -1,0 +1,3 @@
+post-build=msm8960-user 4.2.2 JDQ39 eng.root.20131122.141101 release-keys
+post-timestamp=1385100736
+pre-device=OPPO

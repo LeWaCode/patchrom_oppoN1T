@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<oppo-usb>
+	<internalsd>/storage/sdcard0</internalsd>	
+	<otgpath>/storage/UDiskA</otgpath>
+	<otgpath>/storage/UDiskB</otgpath>
+	<otgpath>/storage/UDiskC</otgpath>
+	<otgpath>/storage/UDiskD</otgpath>
+	<otgpath>/storage/UDiskE</otgpath>
+	<otgpath>/storage/UDiskF</otgpath>	
+</oppo-usb>
