@@ -1581,14 +1581,6 @@
 
     if-nez v0, :cond_0
 
-    iget-object v0, p0, Lcom/android/internal/app/AlertController;->mContext:Landroid/content/Context;
-
-    invoke-static {v0}, Llewa/util/LewaUiUtil;->isV5Ui(Landroid/content/Context;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
     iget-object v0, p0, Lcom/android/internal/app/AlertController;->mIconView:Landroid/widget/ImageView;
 
     const/16 v1, 0x8
@@ -1928,6 +1920,42 @@
         :pswitch_1
         :pswitch_0
     .end packed-switch
+.end method
+
+.method getButtonNegative()Landroid/widget/Button;
+    .locals 1
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/app/AlertController;->mButtonNegative:Landroid/widget/Button;
+
+    return-object v0
+.end method
+
+.method getButtonNeutral()Landroid/widget/Button;
+    .locals 1
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/app/AlertController;->mButtonNeutral:Landroid/widget/Button;
+
+    return-object v0
+.end method
+
+.method getButtonPositive()Landroid/widget/Button;
+    .locals 1
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/app/AlertController;->mButtonPositive:Landroid/widget/Button;
+
+    return-object v0
 .end method
 
 .method public getIconAttributeResId(I)I

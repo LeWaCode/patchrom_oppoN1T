@@ -13,6 +13,4 @@ private-phone-apps := OppoCamera \
                       UserDictionaryProvider \
                       VpnDialogs \
                       UserDictionaryProvider \
-                      Email \
-                      Phone \
                       VideoGallery \

@@ -107,7 +107,7 @@
 
 .field public static final NT_MODE_WCDMA_PREF:I = 0x0
 
-.field public static final PREFERRED_CDMA_SUBSCRIPTION:I = 0x1
+.field public static final PREFERRED_CDMA_SUBSCRIPTION:I = 0x0
 
 .field public static final PREFERRED_NT_MODE:I = 0x0
 
