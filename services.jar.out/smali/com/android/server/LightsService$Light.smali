@@ -4,10 +4,8 @@
 
 
 # annotations
-.annotation build Landroid/annotation/OppoHook;
-    level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_ACCESS:Landroid/annotation/OppoHook$OppoHookType;
-    note = "Jun.Zhang@Plf.Framework, use for oppo button light"
-    property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
+.annotation build Landroid/annotation/LewaHook;
+    value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_ACCESS:Landroid/annotation/LewaHook$LewaHookType;
 .end annotation
 
 .annotation system Ldalvik/annotation/EnclosingClass;
@@ -60,6 +58,21 @@
     return-void
 .end method
 
+.method constructor <init>(Lcom/android/server/LightsService;II)V
+    .locals 0
+    .parameter
+    .parameter "id"
+    .parameter "unused"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+
+    .prologue
+    invoke-direct {p0, p1, p2}, Lcom/android/server/LightsService$Light;-><init>(Lcom/android/server/LightsService;I)V
+
+    return-void
+.end method
+
 .method static synthetic access$300(Lcom/android/server/LightsService$Light;)I
     .locals 1
     .parameter "x0"
@@ -80,6 +93,111 @@
     invoke-direct {p0}, Lcom/android/server/LightsService$Light;->stopFlashing()V
 
     return-void
+.end method
+
+.method setLightLocked(IIIII)V
+    .locals 7
+    .parameter "color"
+    .parameter "mode"
+    .parameter "onMS"
+    .parameter "offMS"
+    .parameter "brightnessMode"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_ACCESS:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+
+    .prologue
+    .line 128
+    iget v0, p0, Lcom/android/server/LightsService$Light;->mColor:I
+
+    if-ne p1, v0, :cond_0
+
+    iget v0, p0, Lcom/android/server/LightsService$Light;->mMode:I
+
+    if-ne p2, v0, :cond_0
+
+    iget v0, p0, Lcom/android/server/LightsService$Light;->mOnMS:I
+
+    if-ne p3, v0, :cond_0
+
+    iget v0, p0, Lcom/android/server/LightsService$Light;->mOffMS:I
+
+    if-eq p4, v0, :cond_1
+
+    .line 131
+    :cond_0
+    iput p1, p0, Lcom/android/server/LightsService$Light;->mColor:I
+
+    .line 132
+    iput p2, p0, Lcom/android/server/LightsService$Light;->mMode:I
+
+    .line 133
+    iput p3, p0, Lcom/android/server/LightsService$Light;->mOnMS:I
+
+    .line 134
+    iput p4, p0, Lcom/android/server/LightsService$Light;->mOffMS:I
+
+    .line 135
+    iget-object v0, p0, Lcom/android/server/LightsService$Light;->this$0:Lcom/android/server/LightsService;
+
+    #getter for: Lcom/android/server/LightsService;->mNativePointer:I
+    invoke-static {v0}, Lcom/android/server/LightsService;->access$100(Lcom/android/server/LightsService;)I
+
+    move-result v0
+
+    iget v1, p0, Lcom/android/server/LightsService$Light;->mId:I
+
+    move v2, p1
+
+    move v3, p2
+
+    move v4, p3
+
+    move v5, p4
+
+    move v6, p5
+
+    #calls: Lcom/android/server/LightsService;->setLight_native(IIIIIII)V
+    invoke-static/range {v0 .. v6}, Lcom/android/server/LightsService;->access$200(IIIIIII)V
+
+    .line 137
+    :cond_1
+    return-void
+.end method
+
+.method private calibrateBrightnessButtonLight(I)I
+    .locals 4
+    .parameter "brightness"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+
+    .prologue
+    move v0, p1
+
+    .local v0, calibratedBrightness:I
+    iget v1, p0, Lcom/android/server/LightsService$Light;->mId:I
+
+    const/4 v2, 0x2
+
+    if-ne v1, v2, :cond_0
+
+    const/4 v1, 0x1
+
+    const-string v2, "persist.sys.disable_btn_light"
+
+    const/4 v3, 0x0
+
+    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getInt(Ljava/lang/String;I)I
+
+    move-result v2
+
+    if-ne v1, v2, :cond_0
+
+    const/4 v0, 0x0
+
+    :cond_0
+    return v0
 .end method
 
 .method private stopFlashing()V
@@ -219,9 +337,15 @@
 .method public setBrightness(I)V
     .locals 1
     .parameter "brightness"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
 
     .prologue
-    .line 75
+    invoke-direct {p0, p1}, Lcom/android/server/LightsService$Light;->calibrateBrightnessButtonLight(I)I
+
+    move-result p1
+
     const/4 v0, 0x0
 
     invoke-virtual {p0, p1, v0}, Lcom/android/server/LightsService$Light;->setBrightness(II)V
@@ -370,78 +494,6 @@
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     throw v0
-.end method
-
-.method setLightLocked(IIIII)V
-    .locals 7
-    .parameter "color"
-    .parameter "mode"
-    .parameter "onMS"
-    .parameter "offMS"
-    .parameter "brightnessMode"
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_ACCESS:Landroid/annotation/OppoHook$OppoHookType;
-        note = "Jun.Zhang@Plf.Framework, use for oppo button light"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
-    .end annotation
-
-    .prologue
-    .line 128
-    iget v0, p0, Lcom/android/server/LightsService$Light;->mColor:I
-
-    if-ne p1, v0, :cond_0
-
-    iget v0, p0, Lcom/android/server/LightsService$Light;->mMode:I
-
-    if-ne p2, v0, :cond_0
-
-    iget v0, p0, Lcom/android/server/LightsService$Light;->mOnMS:I
-
-    if-ne p3, v0, :cond_0
-
-    iget v0, p0, Lcom/android/server/LightsService$Light;->mOffMS:I
-
-    if-eq p4, v0, :cond_1
-
-    .line 131
-    :cond_0
-    iput p1, p0, Lcom/android/server/LightsService$Light;->mColor:I
-
-    .line 132
-    iput p2, p0, Lcom/android/server/LightsService$Light;->mMode:I
-
-    .line 133
-    iput p3, p0, Lcom/android/server/LightsService$Light;->mOnMS:I
-
-    .line 134
-    iput p4, p0, Lcom/android/server/LightsService$Light;->mOffMS:I
-
-    .line 135
-    iget-object v0, p0, Lcom/android/server/LightsService$Light;->this$0:Lcom/android/server/LightsService;
-
-    #getter for: Lcom/android/server/LightsService;->mNativePointer:I
-    invoke-static {v0}, Lcom/android/server/LightsService;->access$100(Lcom/android/server/LightsService;)I
-
-    move-result v0
-
-    iget v1, p0, Lcom/android/server/LightsService$Light;->mId:I
-
-    move v2, p1
-
-    move v3, p2
-
-    move v4, p3
-
-    move v5, p4
-
-    move v6, p5
-
-    #calls: Lcom/android/server/LightsService;->setLight_native(IIIIIII)V
-    invoke-static/range {v0 .. v6}, Lcom/android/server/LightsService;->access$200(IIIIIII)V
-
-    .line 137
-    :cond_1
-    return-void
 .end method
 
 .method public turnOff()V

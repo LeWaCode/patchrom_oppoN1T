@@ -7,15 +7,10 @@
 
 
 # annotations
-.annotation build Landroid/annotation/OppoHook;
-    level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_ACCESS:Landroid/annotation/OppoHook$OppoHookType;
-    note = "Jianhui.Yu@Plf.Framework.SDK : -private: Modify for ActionBar of oppo style"
-    property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
-.end annotation
-
 .annotation build Landroid/annotation/LewaHook;
     value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
 .end annotation
+
 
 .annotation system Ldalvik/annotation/EnclosingClass;
     value = Lcom/android/internal/policy/impl/PhoneWindow;
@@ -419,57 +414,6 @@
 
 
 # virtual methods
-.method public dispatchBackTouchEvent(Landroid/view/MotionEvent;)Z
-    .locals 3
-    .parameter "event"
-
-    .prologue
-    .line 1970
-    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->this$0:Lcom/android/internal/policy/impl/PhoneWindow;
-
-    invoke-virtual {v1}, Lcom/android/internal/policy/impl/PhoneWindow;->getOppoCallback()Landroid/view/Window$OppoCallback;
-
-    move-result-object v0
-
-    .line 1971
-    .local v0, cb:Landroid/view/Window$OppoCallback;
-    const-string v1, "BackTouch_PhoneWindow"
-
-    const-string v2, "dispatchBackTouchEvent"
-
-    invoke-static {v1, v2}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 1972
-    if-eqz v0, :cond_0
-
-    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->this$0:Lcom/android/internal/policy/impl/PhoneWindow;
-
-    invoke-virtual {v1}, Lcom/android/internal/policy/impl/PhoneWindow;->isDestroyed()Z
-
-    move-result v1
-
-    if-nez v1, :cond_0
-
-    iget v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mFeatureId:I
-
-    if-gez v1, :cond_0
-
-    invoke-interface {v0, p1}, Landroid/view/Window$OppoCallback;->dispatchBackTouchEvent(Landroid/view/MotionEvent;)Z
-
-    move-result v1
-
-    :goto_0
-    return v1
-
-    :cond_0
-    invoke-super {p0, p1}, Landroid/widget/FrameLayout;->dispatchBackTouchEvent(Landroid/view/MotionEvent;)Z
-
-    move-result v1
-
-    goto :goto_0
-.end method
-
-# virtual methods
 .method protected dispatchDraw(Landroid/graphics/Canvas;)V
     .locals 6
     .parameter "canvas"
@@ -557,6 +501,56 @@
     move-object v1, p1
 
     invoke-virtual/range {v0 .. v5}, Lcom/android/internal/policy/impl/RoundedCorners;->draw(Landroid/graphics/Canvas;IIII)V
+
+    goto :goto_0
+.end method
+
+.method public dispatchBackTouchEvent(Landroid/view/MotionEvent;)Z
+    .locals 3
+    .parameter "event"
+
+    .prologue
+    .line 1970
+    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->this$0:Lcom/android/internal/policy/impl/PhoneWindow;
+
+    invoke-virtual {v1}, Lcom/android/internal/policy/impl/PhoneWindow;->getOppoCallback()Landroid/view/Window$OppoCallback;
+
+    move-result-object v0
+
+    .line 1971
+    .local v0, cb:Landroid/view/Window$OppoCallback;
+    const-string v1, "BackTouch_PhoneWindow"
+
+    const-string v2, "dispatchBackTouchEvent"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 1972
+    if-eqz v0, :cond_0
+
+    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->this$0:Lcom/android/internal/policy/impl/PhoneWindow;
+
+    invoke-virtual {v1}, Lcom/android/internal/policy/impl/PhoneWindow;->isDestroyed()Z
+
+    move-result v1
+
+    if-nez v1, :cond_0
+
+    iget v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$DecorView;->mFeatureId:I
+
+    if-gez v1, :cond_0
+
+    invoke-interface {v0, p1}, Landroid/view/Window$OppoCallback;->dispatchBackTouchEvent(Landroid/view/MotionEvent;)Z
+
+    move-result v1
+
+    :goto_0
+    return v1
+
+    :cond_0
+    invoke-super {p0, p1}, Landroid/widget/FrameLayout;->dispatchBackTouchEvent(Landroid/view/MotionEvent;)Z
+
+    move-result v1
 
     goto :goto_0
 .end method

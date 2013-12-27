@@ -69,7 +69,7 @@
 
     .prologue
     .line 1995
-    const v1, 0xc09041e
+    const v1, 0x1090094
 
     invoke-virtual {p0, v1}, Landroid/app/Notification$BigPictureStyle;->getStandardView(I)Landroid/widget/RemoteViews;
 
@@ -77,7 +77,7 @@
 
     .line 1998
     .local v0, contentView:Landroid/widget/RemoteViews;
-    const v1, 0xc02047a
+    const v1, 0x1020359
 
     iget-object v2, p0, Landroid/app/Notification$BigPictureStyle;->mPicture:Landroid/graphics/Bitmap;
 

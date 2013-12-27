@@ -1695,25 +1695,19 @@
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_0
 
+    .line 1259
     :goto_1
-    :try_start_2
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->mContext:Landroid/content/Context;
-
-    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/LewaKeyguardUtils;->isLewaLockscreen(Landroid/content/Context;)Z
-
-    move-result v0
-
-    if-nez v0, :cond_1
-
     const/4 v0, 0x1
 
+    :try_start_2
     invoke-direct {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->playSounds(Z)V
 
-    :cond_1
+    .line 1261
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->mShowKeyguardWakeLock:Landroid/os/PowerManager$WakeLock;
 
     invoke-virtual {v0}, Landroid/os/PowerManager$WakeLock;->release()V
 
+    .line 1262
     monitor-exit p0
 
     goto :goto_0

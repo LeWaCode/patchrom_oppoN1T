@@ -387,10 +387,8 @@
 .method public loadIcon(Landroid/content/pm/PackageManager;)Landroid/graphics/drawable/Drawable;
     .locals 1
     .parameter "pm"
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_CODE:Landroid/annotation/OppoHook$OppoHookType;
-        note = "modify for rom theme"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
 
     .prologue
@@ -405,73 +403,38 @@
 .end method
 
 .method public loadIcon(Landroid/content/pm/PackageManager;Z)Landroid/graphics/drawable/Drawable;
-    .locals 5
+    .locals 4
     .parameter "pm"
-    .parameter "isConvertEnable"
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->NEW_METHOD:Landroid/annotation/OppoHook$OppoHookType;
-        note = "YongDong.Zhang@Plf.Framework.SDK : Add for we can make ConvertIcon Useless"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
 
     .prologue
     .line 166
     iget v1, p0, Landroid/content/pm/PackageItemInfo;->icon:I
 
-    if-eqz v1, :cond_3
+    if-eqz v1, :cond_0
 
-    .line 172
-    const/4 v0, 0x0
+    iget-object v1, p0, Landroid/content/pm/PackageItemInfo;->packageName:Ljava/lang/String;
 
-    .line 173
+    iget v2, p0, Landroid/content/pm/PackageItemInfo;->icon:I
+
+    invoke-virtual {p0}, Landroid/content/pm/PackageItemInfo;->getApplicationInfo()Landroid/content/pm/ApplicationInfo;
+
+    move-result-object v3
+
+    invoke-static {p0, p1, v1, v2, v3}, Landroid/content/pm/PackageItemInfo$Injector;->getIconDrawable(Landroid/content/pm/PackageItemInfo;Landroid/content/pm/PackageManager;Ljava/lang/String;ILandroid/content/pm/ApplicationInfo;)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v0
+
     .local v0, dr:Landroid/graphics/drawable/Drawable;
-    if-eqz p2, :cond_0
+    if-eqz v0, :cond_0
 
-    .line 174
-    iget-object v1, p0, Landroid/content/pm/PackageItemInfo;->packageName:Ljava/lang/String;
-
-    iget v2, p0, Landroid/content/pm/PackageItemInfo;->icon:I
-
-    invoke-virtual {p0}, Landroid/content/pm/PackageItemInfo;->getApplicationInfo()Landroid/content/pm/ApplicationInfo;
-
-    move-result-object v3
-
-    iget-object v4, p0, Landroid/content/pm/PackageItemInfo;->name:Ljava/lang/String;
-
-    invoke-static {p1, v1, v2, v3, v4}, Landroid/app/OppoThemeHelper;->getDrawable(Landroid/content/pm/PackageManager;Ljava/lang/String;ILandroid/content/pm/ApplicationInfo;Ljava/lang/String;)Landroid/graphics/drawable/Drawable;
-
-    move-result-object v0
-
-    .line 176
-    :cond_0
-    if-eqz v0, :cond_1
-
-    if-nez p2, :cond_2
-
-    .line 177
-    :cond_1
-    iget-object v1, p0, Landroid/content/pm/PackageItemInfo;->packageName:Ljava/lang/String;
-
-    iget v2, p0, Landroid/content/pm/PackageItemInfo;->icon:I
-
-    invoke-virtual {p0}, Landroid/content/pm/PackageItemInfo;->getApplicationInfo()Landroid/content/pm/ApplicationInfo;
-
-    move-result-object v3
-
-    invoke-virtual {p1, v1, v2, v3}, Landroid/content/pm/PackageManager;->getDrawable(Ljava/lang/String;ILandroid/content/pm/ApplicationInfo;)Landroid/graphics/drawable/Drawable;
-
-    move-result-object v0
-
-    .line 181
-    :cond_2
-    if-eqz v0, :cond_3
-
-    .line 185
     .end local v0           #dr:Landroid/graphics/drawable/Drawable;
     :goto_0
     return-object v0
 
-    :cond_3
+    :cond_0
     invoke-virtual {p0, p1}, Landroid/content/pm/PackageItemInfo;->loadDefaultIcon(Landroid/content/pm/PackageManager;)Landroid/graphics/drawable/Drawable;
 
     move-result-object v0
@@ -482,9 +445,6 @@
 .method public loadLabel(Landroid/content/pm/PackageManager;)Ljava/lang/CharSequence;
     .locals 4
     .parameter "pm"
-    .annotation build Landroid/annotation/LewaHook;
-        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
-    .end annotation
 
     .prologue
     .line 126
@@ -571,7 +531,7 @@
 
     move-result-object v3
 
-    invoke-static {p0, p1, v1, v2, v3}, Landroid/content/pm/PackageItemInfo$Injector;->getIconDrawable(Landroid/content/pm/PackageItemInfo;Landroid/content/pm/PackageManager;Ljava/lang/String;ILandroid/content/pm/ApplicationInfo;)Landroid/graphics/drawable/Drawable;
+    invoke-virtual {p1, v1, v2, v3}, Landroid/content/pm/PackageManager;->getDrawable(Ljava/lang/String;ILandroid/content/pm/ApplicationInfo;)Landroid/graphics/drawable/Drawable;
 
     move-result-object v0
 

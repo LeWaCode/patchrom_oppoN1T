@@ -851,9 +851,9 @@
     invoke-static {v7, v9}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 335
-    new-instance v6, Lcom/android/server/OppoLightsService;
+    new-instance v6, Lcom/android/server/LewaLightsService;
 
-    invoke-direct {v6, v5}, Lcom/android/server/OppoLightsService;-><init>(Landroid/content/Context;)V
+    invoke-direct {v6, v5}, Lcom/android/server/LewaLightsService;-><init>(Landroid/content/Context;)V
     :try_end_b
     .catch Ljava/lang/RuntimeException; {:try_start_b .. :try_end_b} :catch_1
 

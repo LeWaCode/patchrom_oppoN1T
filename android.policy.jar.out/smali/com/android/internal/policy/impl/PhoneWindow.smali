@@ -812,27 +812,66 @@
     goto :goto_0
 .end method
 
+.method getKeyguardManager()Landroid/app/KeyguardManager;
+    .locals 2
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_ACCESS:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+
+    .prologue
+    .line 1536
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow;->mKeyguardManager:Landroid/app/KeyguardManager;
+
+    if-nez v0, :cond_0
+
+    .line 1537
+    invoke-virtual {p0}, Lcom/android/internal/policy/impl/PhoneWindow;->getContext()Landroid/content/Context;
+
+    move-result-object v0
+
+    const-string v1, "keyguard"
+
+    invoke-virtual {v0, v1}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/app/KeyguardManager;
+
+    iput-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow;->mKeyguardManager:Landroid/app/KeyguardManager;
+
+    .line 1540
+    :cond_0
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow;->mKeyguardManager:Landroid/app/KeyguardManager;
+
+    return-object v0
+.end method
+
 .method private getLeftIconView()Landroid/widget/ImageView;
     .locals 1
 
     .prologue
+    .line 3239
     iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow;->mLeftIconView:Landroid/widget/ImageView;
 
     if-eqz v0, :cond_0
 
+    .line 3240
     iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow;->mLeftIconView:Landroid/widget/ImageView;
 
+    .line 3245
     :goto_0
     return-object v0
 
-    .line 1540
+    .line 3242
     :cond_0
     iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow;->mContentParent:Landroid/view/ViewGroup;
 
     if-nez v0, :cond_1
 
+    .line 3243
     invoke-direct {p0}, Lcom/android/internal/policy/impl/PhoneWindow;->installDecor()V
 
+    .line 3245
     :cond_1
     const v0, 0x1020241
 
@@ -1621,10 +1660,8 @@
     .locals 22
     .parameter "st"
     .parameter "event"
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_CODE:Landroid/annotation/OppoHook$OppoHookType;
-        note = "LiangJing.Fu@Plf.Framework.SDK : Modify for there is visible non-action items to show in OptionMenu"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
 
     .prologue
@@ -1778,7 +1815,6 @@
     move-result v4
 
     if-eqz v4, :cond_0
-
     invoke-direct/range {p0 .. p1}, Lcom/android/internal/policy/impl/PhoneWindow;->isNeedShowMenu(Lcom/android/internal/policy/impl/PhoneWindow$PanelFeatureState;)Z
 
     move-result v4
@@ -2074,7 +2110,7 @@
 
     const/16 v7, 0x3eb
 
-    const/high16 v8, 0x82
+    const v8, 0x820002
 
     move-object/from16 v0, p1
 
@@ -2118,6 +2154,7 @@
 
     invoke-direct {v0, v2}, Lcom/android/internal/policy/impl/PhoneWindow;->setDimAmountValue(Landroid/view/WindowManager$LayoutParams;)V
 
+    .line 688
     move-object/from16 v0, p1
 
     iget-object v4, v0, Lcom/android/internal/policy/impl/PhoneWindow$PanelFeatureState;->decorView:Lcom/android/internal/policy/impl/PhoneWindow$DecorView;
@@ -3670,12 +3707,6 @@
 .method protected generateLayout(Lcom/android/internal/policy/impl/PhoneWindow$DecorView;)Landroid/view/ViewGroup;
     .locals 22
     .parameter "decor"
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_CODE:Landroid/annotation/OppoHook$OppoHookType;
-        note = "Jianhui.Yu@Plf.Framework.SDK : Modify for ActionBar of oppo style"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
-    .end annotation
-
     .annotation build Landroid/annotation/LewaHook;
         value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
@@ -4954,6 +4985,7 @@
 
     if-eqz v19, :cond_26
 
+    .line 2912
     invoke-virtual/range {p0 .. p0}, Lcom/android/internal/policy/impl/PhoneWindow;->getContext()Landroid/content/Context;
 
     move-result-object v19
@@ -5282,37 +5314,6 @@
     .line 1628
     :cond_0
     iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow;->mDecor:Lcom/android/internal/policy/impl/PhoneWindow$DecorView;
-
-    return-object v0
-.end method
-
-.method getKeyguardManager()Landroid/app/KeyguardManager;
-    .locals 2
-    .annotation build Landroid/annotation/LewaHook;
-        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_ACCESS:Landroid/annotation/LewaHook$LewaHookType;
-    .end annotation
-
-    .prologue
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow;->mKeyguardManager:Landroid/app/KeyguardManager;
-
-    if-nez v0, :cond_0
-
-    invoke-virtual {p0}, Lcom/android/internal/policy/impl/PhoneWindow;->getContext()Landroid/content/Context;
-
-    move-result-object v0
-
-    const-string v1, "keyguard"
-
-    invoke-virtual {v0, v1}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Landroid/app/KeyguardManager;
-
-    iput-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow;->mKeyguardManager:Landroid/app/KeyguardManager;
-
-    :cond_0
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindow;->mKeyguardManager:Landroid/app/KeyguardManager;
 
     return-object v0
 .end method

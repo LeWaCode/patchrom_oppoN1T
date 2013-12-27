@@ -14,7 +14,8 @@
         Lcom/android/internal/policy/impl/PhoneWindowManager$MyOrientationListener;,
         Lcom/android/internal/policy/impl/PhoneWindowManager$SettingsObserver;,
         Lcom/android/internal/policy/impl/PhoneWindowManager$PolicyHandler;,
-        Lcom/android/internal/policy/impl/PhoneWindowManager$PointerLocationInputEventReceiver;
+        Lcom/android/internal/policy/impl/PhoneWindowManager$PointerLocationInputEventReceiver;,
+        Lcom/android/internal/policy/impl/PhoneWindowManager$Injector;
     }
 .end annotation
 
@@ -203,6 +204,12 @@
 
 .field mBroadcastWakeLock:Landroid/os/PowerManager$WakeLock;
 
+.field mCameraPowerShutter:Z
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_FIELD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+.end field
+
 .field mCanHideNavigationBar:Z
 
 .field mCarDockEnablesAccelerometer:Z
@@ -348,12 +355,7 @@
 
 .field mKeyguard:Landroid/view/WindowManagerPolicy$WindowState;
 
-.field mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->NEW_FIELD:Landroid/annotation/OppoHook$OppoHookType;
-        note = "zhangkai add for apklock"
-    .end annotation
-.end field
+.field mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
 .field mLandscapeRotation:I
 
@@ -544,6 +546,12 @@
 .field mTopFullscreenOpaqueWindowState:Landroid/view/WindowManagerPolicy$WindowState;
 
 .field mTopIsFullscreen:Z
+
+.field private mUiContext:Landroid/content/Context;
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_FIELD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+.end field
 
 .field mUnrestrictedScreenHeight:I
 
@@ -1660,9 +1668,9 @@
 
     .prologue
     .line 806
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isShowing()Z
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isShowing()Z
 
     move-result v0
 
@@ -2320,7 +2328,7 @@
 
     .prologue
     .line 4483
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     if-nez v0, :cond_0
 
@@ -2331,9 +2339,9 @@
     return v0
 
     :cond_0
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isShowingAndNotHidden()Z
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isShowingAndNotHidden()Z
 
     move-result v0
 
@@ -3381,13 +3389,13 @@
 
     if-eqz v1, :cond_1
 
-    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     if-eqz v1, :cond_1
 
-    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isSecure()Z
+    invoke-virtual {v1}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isSecure()Z
 
     move-result v1
 
@@ -3463,7 +3471,7 @@
 
     .prologue
     .line 4402
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     if-eqz v0, :cond_1
 
@@ -3471,13 +3479,13 @@
     if-eqz p1, :cond_0
 
     .line 4404
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     new-instance v1, Lcom/android/internal/policy/impl/PhoneWindowManager$18;
 
     invoke-direct {v1, p0, p1}, Lcom/android/internal/policy/impl/PhoneWindowManager$18;-><init>(Lcom/android/internal/policy/impl/PhoneWindowManager;Landroid/view/WindowManagerPolicy$ScreenOnListener;)V
 
-    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->onScreenTurnedOn(Lcom/android/internal/policy/impl/keyguard/KeyguardViewManager$ShowListener;)V
+    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->onScreenTurnedOn(Lcom/android/internal/policy/impl/KeyguardViewManager$ShowListener;)V
 
     .line 4418
     :goto_0
@@ -3485,11 +3493,11 @@
 
     .line 4412
     :cond_0
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     const/4 v1, 0x0
 
-    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->onScreenTurnedOn(Lcom/android/internal/policy/impl/keyguard/KeyguardViewManager$ShowListener;)V
+    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->onScreenTurnedOn(Lcom/android/internal/policy/impl/KeyguardViewManager$ShowListener;)V
 
     .line 4417
     :goto_1
@@ -4432,6 +4440,9 @@
     .parameter "displayWidth"
     .parameter "displayHeight"
     .parameter "displayRotation"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
 
     .prologue
     .line 2637
@@ -5471,6 +5482,34 @@
     return-void
 .end method
 
+.method callInterceptPowerKeyDown(Z)V
+    .locals 0
+    .parameter "handled"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+
+    .prologue
+    invoke-direct {p0, p1}, Lcom/android/internal/policy/impl/PhoneWindowManager;->interceptPowerKeyDown(Z)V
+
+    return-void
+.end method
+
+.method callInterceptPowerKeyUp(Z)Z
+    .locals 1
+    .parameter "canceled"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+
+    .prologue
+    invoke-direct {p0, p1}, Lcom/android/internal/policy/impl/PhoneWindowManager;->interceptPowerKeyUp(Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
 .method callInterceptScreenshotChord()V
     .locals 0
     .annotation build Landroid/annotation/LewaHook;
@@ -5768,9 +5807,9 @@
 
     .prologue
     .line 4506
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isShowing()Z
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isShowing()Z
 
     move-result v0
 
@@ -7300,14 +7339,14 @@
 
     .prologue
     .line 4470
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     if-eqz v0, :cond_0
 
     .line 4471
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v0, p1}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->setKeyguardEnabled(Z)V
+    invoke-virtual {v0, p1}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->setKeyguardEnabled(Z)V
 
     .line 4473
     :cond_0
@@ -7339,14 +7378,14 @@
 
     .prologue
     .line 4477
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     if-eqz v0, :cond_0
 
     .line 4478
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v0, p1}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->verifyUnlock(Landroid/view/WindowManagerPolicy$OnKeyguardExitResult;)V
+    invoke-virtual {v0, p1}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->verifyUnlock(Landroid/view/WindowManagerPolicy$OnKeyguardExitResult;)V
 
     .line 4480
     :cond_0
@@ -7444,9 +7483,9 @@
 
     if-eqz v6, :cond_b
 
-    iget-object v6, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v6, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v6}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isSecure()Z
+    invoke-virtual {v6}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isSecure()Z
 
     move-result v6
 
@@ -7466,9 +7505,9 @@
 
     .line 3369
     :cond_3
-    iget-object v3, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v3, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v3}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isShowing()Z
+    invoke-virtual {v3}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isShowing()Z
 
     move-result v3
 
@@ -7605,9 +7644,9 @@
 
     .line 3383
     :cond_c
-    iget-object v3, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v3, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v3, v5}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->setHidden(Z)V
+    invoke-virtual {v3, v5}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->setHidden(Z)V
 
     goto :goto_2
 
@@ -7636,9 +7675,9 @@
 
     .line 3393
     :cond_e
-    iget-object v3, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v3, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v3, v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->setHidden(Z)V
+    invoke-virtual {v3, v4}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->setHidden(Z)V
 
     .line 3394
     iget-object v3, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mHandler:Landroid/os/Handler;
@@ -7669,9 +7708,9 @@
 
     .line 3408
     :cond_10
-    iget-object v3, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v3, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v3, v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->setHidden(Z)V
+    invoke-virtual {v3, v4}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->setHidden(Z)V
 
     goto/16 :goto_2
 .end method
@@ -8500,7 +8539,7 @@
 
     .prologue
     .line 4501
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     if-nez v0, :cond_0
 
@@ -8511,9 +8550,9 @@
     return v0
 
     :cond_0
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isInputRestricted()Z
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isInputRestricted()Z
 
     move-result v0
 
@@ -8525,6 +8564,9 @@
     .parameter "context"
     .parameter "windowManager"
     .parameter "windowManagerFuncs"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
 
     .prologue
     const/high16 v8, 0x1020
@@ -8562,11 +8604,12 @@
 
     if-nez v4, :cond_0
 
-    new-instance v4, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    .line 1013
+    new-instance v4, Lcom/android/internal/policy/impl/LewaKeyguardViewMediator;
 
-    invoke-direct {v4, p1, v7}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;-><init>(Landroid/content/Context;Lcom/android/internal/widget/LockPatternUtils;)V
+    invoke-direct {v4, p1, p0}, Lcom/android/internal/policy/impl/LewaKeyguardViewMediator;-><init>(Landroid/content/Context;Lcom/android/internal/policy/impl/PhoneWindowManager;)V
 
-    iput-object v4, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iput-object v4, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     .line 1015
     :cond_0
@@ -10924,7 +10967,7 @@
     .line 3847
     move-object/from16 v0, p0
 
-    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     move-object/from16 v19, v0
 
@@ -10932,11 +10975,11 @@
 
     move-object/from16 v0, p0
 
-    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     move-object/from16 v19, v0
 
-    invoke-virtual/range {v19 .. v19}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isShowing()Z
+    invoke-virtual/range {v19 .. v19}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isShowing()Z
 
     move-result v19
 
@@ -10965,7 +11008,7 @@
     .line 3849
     move-object/from16 v0, p0
 
-    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     move-object/from16 v19, v0
 
@@ -10973,7 +11016,7 @@
 
     const/16 v21, 0x1
 
-    invoke-virtual/range {v19 .. v21}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->keyguardDone(ZZ)V
+    invoke-virtual/range {v19 .. v21}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->keyguardDone(ZZ)V
 
     .line 3851
     :cond_2
@@ -11160,7 +11203,7 @@
     :goto_3
     move-object/from16 v0, p0
 
-    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     move-object/from16 v19, v0
 
@@ -11331,11 +11374,11 @@
 
     move-object/from16 v0, p0
 
-    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     move-object/from16 v19, v0
 
-    invoke-virtual/range {v19 .. v19}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isShowingAndNotHidden()Z
+    invoke-virtual/range {v19 .. v19}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isShowingAndNotHidden()Z
 
     move-result v14
 
@@ -11344,11 +11387,11 @@
     :cond_f
     move-object/from16 v0, p0
 
-    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     move-object/from16 v19, v0
 
-    invoke-virtual/range {v19 .. v19}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isShowing()Z
+    invoke-virtual/range {v19 .. v19}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isShowing()Z
 
     move-result v14
 
@@ -11373,6 +11416,14 @@
     .line 3944
     .local v11, isTimeOut:Z
     move-object/from16 v0, p0
+
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
+
+    move-object/from16 v19, v0
+
+    invoke-virtual/range {v19 .. v19}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->shouldDelayScreenOn()Z
+
+    move-result v19
 
     if-eqz v19, :cond_12
 
@@ -11419,13 +11470,13 @@
     .line 3951
     move-object/from16 v0, p0
 
-    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     move-object/from16 v19, v0
 
     move-object/from16 v0, v19
 
-    invoke-virtual {v0, v13}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->onWakeKeyWhenKeyguardShowingTq(I)V
+    invoke-virtual {v0, v13}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->onWakeKeyWhenKeyguardShowingTq(I)V
 
     goto :goto_6
 
@@ -12317,22 +12368,22 @@
     if-eqz v0, :cond_0
 
     .line 4230
-    iget-object v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     if-eqz v2, :cond_2
 
-    iget-object v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isShowing()Z
+    invoke-virtual {v2}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isShowing()Z
 
     move-result v2
 
     if-eqz v2, :cond_2
 
     .line 4232
-    iget-object v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->onWakeMotionWhenKeyguardShowingTq()V
+    invoke-virtual {v2}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->onWakeMotionWhenKeyguardShowingTq()Z
 
     .line 4238
     :cond_0
@@ -12505,7 +12556,7 @@
 
     .prologue
     .line 4495
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     if-nez v0, :cond_0
 
@@ -12516,9 +12567,9 @@
     return v0
 
     :cond_0
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isSecure()Z
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isSecure()Z
 
     move-result v0
 
@@ -12599,13 +12650,13 @@
 
     .prologue
     .line 5063
-    iget-object v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     if-eqz v2, :cond_0
 
-    iget-object v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isShowingAndNotHidden()Z
+    invoke-virtual {v2}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isShowingAndNotHidden()Z
 
     move-result v2
 
@@ -12659,18 +12710,86 @@
     goto :goto_0
 .end method
 
+.method public keyguardSetApkLockScreenShowing(Z)V
+    .locals 2
+    .parameter "showing"
+    .annotation build Landroid/annotation/OppoHook;
+        level = .enum Landroid/annotation/OppoHook$OppoHookType;->NEW_METHOD:Landroid/annotation/OppoHook$OppoHookType;
+        note = "zhangkai add for apklock"
+    .end annotation
+
+    .prologue
+    .line 5321
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
+
+    if-eqz v0, :cond_0
+
+    .line 5322
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
+
+    invoke-virtual {v0, p1}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->keyguardSetApkLockScreenShowing(Z)V
+
+    .line 5327
+    :goto_0
+    return-void
+
+    .line 5325
+    :cond_0
+    const-string v0, "WindowManager"
+
+    const-string v1, "mKeyguardMediator == NULL!!!!"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+.end method
+
+.method public keyguardShowSecureApkLock(Z)V
+    .locals 2
+    .parameter "show"
+    .annotation build Landroid/annotation/OppoHook;
+        level = .enum Landroid/annotation/OppoHook$OppoHookType;->NEW_METHOD:Landroid/annotation/OppoHook$OppoHookType;
+        note = "zhangkai add for apklock"
+    .end annotation
+
+    .prologue
+    .line 5334
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
+
+    if-eqz v0, :cond_0
+
+    .line 5335
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
+
+    invoke-virtual {v0, p1}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->keyguardShowSecureApkLock(Z)V
+
+    .line 5339
+    :goto_0
+    return-void
+
+    .line 5337
+    :cond_0
+    const-string v0, "WindowManager"
+
+    const-string v1, "keyguardShowSecureApkLock mKeyguardMediator == NULL!!!!"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+.end method
+
 .method launchHomeFromHotKey()V
     .locals 2
 
     .prologue
     .line 2471
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     if-eqz v0, :cond_0
 
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isShowingAndNotHidden()Z
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isShowingAndNotHidden()Z
 
     move-result v0
 
@@ -12686,22 +12805,22 @@
 
     if-nez v0, :cond_1
 
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isInputRestricted()Z
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isInputRestricted()Z
 
     move-result v0
 
     if-eqz v0, :cond_1
 
     .line 2476
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     new-instance v1, Lcom/android/internal/policy/impl/PhoneWindowManager$5;
 
     invoke-direct {v1, p0}, Lcom/android/internal/policy/impl/PhoneWindowManager$5;-><init>(Lcom/android/internal/policy/impl/PhoneWindowManager;)V
 
-    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->verifyUnlock(Landroid/view/WindowManagerPolicy$OnKeyguardExitResult;)V
+    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->verifyUnlock(Landroid/view/WindowManagerPolicy$OnKeyguardExitResult;)V
 
     goto :goto_0
 
@@ -14606,11 +14725,11 @@
     if-eqz v1, :cond_3
 
     .line 3460
-    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     const/16 v2, 0x1a
 
-    invoke-virtual {v1, v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->onWakeKeyWhenKeyguardShowingTq(I)V
+    invoke-virtual {v1, v2}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->onWakeKeyWhenKeyguardShowingTq(I)V
 
     goto :goto_0
 
@@ -14716,9 +14835,9 @@
 
     if-nez v0, :cond_0
 
-    iget-object v4, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v4, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->isShowingAndNotHidden()Z
+    invoke-virtual {v4}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->isShowingAndNotHidden()Z
 
     move-result v4
 
@@ -14822,6 +14941,9 @@
     .locals 4
     .parameter "win"
     .parameter "attrs"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
 
     .prologue
     const/4 v0, -0x7
@@ -14934,18 +15056,11 @@
 
     goto :goto_0
 
-    .line 1902
     :sswitch_5
-    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguard:Landroid/view/WindowManagerPolicy$WindowState;
-
-    if-nez v1, :cond_0
-
-    .line 1905
     iput-object p1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguard:Landroid/view/WindowManagerPolicy$WindowState;
 
     goto :goto_0
 
-    .line 1862
     nop
 
     :sswitch_data_0
@@ -15633,14 +15748,14 @@
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     .line 4369
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     if-eqz v0, :cond_0
 
     .line 4370
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v0, p1}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->onScreenTurnedOff(I)V
+    invoke-virtual {v0, p1}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->onScreenTurnedOff(I)V
 
     .line 4372
     :cond_0
@@ -16161,14 +16276,14 @@
     const/4 v1, 0x0
 
     .line 5149
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     if-eqz v0, :cond_0
 
     .line 5150
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v0, p1}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->setCurrentUser(I)V
+    invoke-virtual {v0, p1}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->setCurrentUser(I)V
 
     .line 5152
     :cond_0
@@ -17084,9 +17199,9 @@
 
     .prologue
     .line 5164
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->showAssistant()V
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->showAssistant()V
 
     .line 5165
     return-void
@@ -17122,10 +17237,8 @@
 
 .method showGlobalActionsDialog()V
     .locals 4
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_CODE:Landroid/annotation/OppoHook$OppoHookType;
-        note = "yaolang@Plf.Framework, use oppo global actions"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
 
     .prologue
@@ -17165,9 +17278,9 @@
     if-eqz v0, :cond_1
 
     .line 884
-    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->userActivity()V
+    invoke-virtual {v1}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->userActivity()V
 
     .line 886
     :cond_1
@@ -17351,14 +17464,14 @@
 
     .prologue
     .line 4753
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     if-eqz v0, :cond_0
 
     .line 4755
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mKeyguardMediator:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
-    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->onSystemReady()V
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->onSystemReady()V
 
     .line 4757
     :cond_0

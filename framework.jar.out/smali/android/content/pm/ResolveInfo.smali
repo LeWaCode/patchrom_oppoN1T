@@ -819,12 +819,6 @@
 .method public loadIcon(Landroid/content/pm/PackageManager;)Landroid/graphics/drawable/Drawable;
     .locals 6
     .parameter "pm"
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_CODE:Landroid/annotation/OppoHook$OppoHookType;
-        note = "modify for rom theme"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
-    .end annotation
-
     .annotation build Landroid/annotation/LewaHook;
         value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
@@ -832,11 +826,6 @@
     .prologue
     const/4 v5, 0x0
 
-    .line 191
-    const/4 v2, 0x0
-
-    .line 193
-    .local v2, dr:Landroid/graphics/drawable/Drawable;
     iget-object v3, p0, Landroid/content/pm/ResolveInfo;->resolvePackageName:Ljava/lang/String;
 
     if-eqz v3, :cond_1
@@ -845,17 +834,6 @@
 
     if-eqz v3, :cond_1
 
-    .line 197
-    iget-object v3, p0, Landroid/content/pm/ResolveInfo;->resolvePackageName:Ljava/lang/String;
-
-    invoke-direct {p0, p1, v3, v5}, Landroid/content/pm/ResolveInfo;->loadDrawableFromTheme(Landroid/content/pm/PackageManager;Ljava/lang/String;Landroid/content/pm/ApplicationInfo;)Landroid/graphics/drawable/Drawable;
-
-    move-result-object v2
-
-    .line 198
-    if-nez v2, :cond_0
-
-    .line 199
     iget-object v3, p0, Landroid/content/pm/ResolveInfo;->resolvePackageName:Ljava/lang/String;
 
     iget v4, p0, Landroid/content/pm/ResolveInfo;->icon:I
@@ -864,17 +842,14 @@
 
     move-result-object v2
 
-    .line 202
-    :cond_0
+    .local v2, dr:Landroid/graphics/drawable/Drawable;
     if-eqz v2, :cond_1
 
-    move-object v3, v2
-
-    .line 221
+    .end local v2           #dr:Landroid/graphics/drawable/Drawable;
+    :cond_0
     :goto_0
-    return-object v3
+    return-object v2
 
-    .line 206
     :cond_1
     iget-object v3, p0, Landroid/content/pm/ResolveInfo;->resolvePackageName:Ljava/lang/String;
 
@@ -902,19 +877,9 @@
     .local v0, ai:Landroid/content/pm/ApplicationInfo;
     iget v3, p0, Landroid/content/pm/ResolveInfo;->icon:I
 
-    if-eqz v3, :cond_4
+    if-eqz v3, :cond_2
 
     .line 212
-    iget-object v3, v1, Landroid/content/pm/ComponentInfo;->packageName:Ljava/lang/String;
-
-    invoke-direct {p0, p1, v3, v0}, Landroid/content/pm/ResolveInfo;->loadDrawableFromTheme(Landroid/content/pm/PackageManager;Ljava/lang/String;Landroid/content/pm/ApplicationInfo;)Landroid/graphics/drawable/Drawable;
-
-    move-result-object v2
-
-    .line 213
-    if-nez v2, :cond_2
-
-    .line 214
     iget-object v3, v1, Landroid/content/pm/ComponentInfo;->packageName:Ljava/lang/String;
 
     iget v4, p0, Landroid/content/pm/ResolveInfo;->icon:I
@@ -923,11 +888,14 @@
 
     move-result-object v2
 
-    .line 217
-    :cond_2
-    if-eqz v2, :cond_4
+    .restart local v2       #dr:Landroid/graphics/drawable/Drawable;
+    if-nez v2, :cond_0
 
-    move-object v3, v2
+    .end local v2           #dr:Landroid/graphics/drawable/Drawable;
+    :cond_2
+    invoke-virtual {v1, p1}, Landroid/content/pm/ComponentInfo;->loadIcon(Landroid/content/pm/PackageManager;)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v2
 
     .line 218
     goto :goto_0
@@ -939,16 +907,6 @@
     iget-object v1, p0, Landroid/content/pm/ResolveInfo;->serviceInfo:Landroid/content/pm/ServiceInfo;
 
     goto :goto_1
-
-    .line 221
-    .restart local v0       #ai:Landroid/content/pm/ApplicationInfo;
-    .restart local v1       #ci:Landroid/content/pm/ComponentInfo;
-    :cond_4
-    invoke-virtual {v1, p1}, Landroid/content/pm/ComponentInfo;->loadIcon(Landroid/content/pm/PackageManager;)Landroid/graphics/drawable/Drawable;
-
-    move-result-object v3
-
-    goto :goto_0
 .end method
 
 .method public loadLabel(Landroid/content/pm/PackageManager;)Ljava/lang/CharSequence;
