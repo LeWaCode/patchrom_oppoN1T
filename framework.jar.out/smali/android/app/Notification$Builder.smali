@@ -269,7 +269,7 @@
 
     .line 1582
     .local v9, showLine2:Z
-    const v11, 0x1020006
+    const v11, 0xc020434
 
     .line 1583
     .local v11, smallIconImageViewId:I
@@ -280,7 +280,7 @@
     if-eqz v2, :cond_0
 
     .line 1584
-    const v2, 0x1020006
+    const v2, 0xc020434
 
     move-object/from16 v0, p0
 
@@ -289,7 +289,7 @@
     invoke-virtual {v1, v2, v3}, Landroid/widget/RemoteViews;->setImageViewBitmap(ILandroid/graphics/Bitmap;)V
 
     .line 1585
-    const v11, 0x1020243
+    const v11, 0xc020475
 
     .line 1587
     :cond_0
@@ -302,7 +302,7 @@
     if-ge v2, v3, :cond_1
 
     .line 1589
-    const v2, 0x1020006
+    const v2, 0xc020434
 
     const-string v3, "setBackgroundResource"
 
@@ -311,7 +311,7 @@
     invoke-virtual {v1, v2, v3, v4}, Landroid/widget/RemoteViews;->setInt(ILjava/lang/String;I)V
 
     .line 1591
-    const v2, 0x1020352
+    const v2, 0xc020474
 
     const-string v3, "setBackgroundResource"
 
@@ -348,7 +348,7 @@
     if-eqz v2, :cond_2
 
     .line 1601
-    const v2, 0x1020016
+    const v2, 0xc02049c
 
     move-object/from16 v0, p0
 
@@ -385,7 +385,7 @@
     if-eqz v2, :cond_7
 
     .line 1608
-    const v2, 0x1020356
+    const v2, 0xc020473
 
     move-object/from16 v0, p0
 
@@ -394,7 +394,7 @@
     invoke-virtual {v1, v2, v3}, Landroid/widget/RemoteViews;->setTextViewText(ILjava/lang/CharSequence;)V
 
     .line 1609
-    const v2, 0x1020356
+    const v2, 0xc020473
 
     const/4 v3, 0x0
 
@@ -412,7 +412,7 @@
     if-eqz v2, :cond_b
 
     .line 1629
-    const v2, 0x1020046
+    const v2, 0xc020435
 
     move-object/from16 v0, p0
 
@@ -428,7 +428,7 @@
     if-eqz v2, :cond_a
 
     .line 1631
-    const v2, 0x1020015
+    const v2, 0xc020476
 
     move-object/from16 v0, p0
 
@@ -437,7 +437,7 @@
     invoke-virtual {v1, v2, v3}, Landroid/widget/RemoteViews;->setTextViewText(ILjava/lang/CharSequence;)V
 
     .line 1632
-    const v2, 0x1020015
+    const v2, 0xc020476
 
     const/4 v3, 0x0
 
@@ -474,7 +474,7 @@
 
     .line 1654
     .local v12, subTextSize:F
-    const v2, 0x1020046
+    const v2, 0xc020435
 
     const/4 v3, 0x0
 
@@ -484,7 +484,7 @@
     .end local v8           #res:Landroid/content/res/Resources;
     .end local v12           #subTextSize:F
     :cond_4
-    const v2, 0x1020353
+    const v2, 0xc020477
 
     const/4 v3, 0x0
 
@@ -529,7 +529,7 @@
     invoke-virtual {v1, v2, v3}, Landroid/widget/RemoteViews;->setViewVisibility(II)V
 
     .line 1663
-    const v2, 0x1020354
+    const v2, 0xc020478
 
     const-string v3, "setBase"
 
@@ -552,7 +552,7 @@
     invoke-virtual {v1, v2, v3, v4, v5}, Landroid/widget/RemoteViews;->setLong(ILjava/lang/String;J)V
 
     .line 1665
-    const v2, 0x1020354
+    const v2, 0xc020478
 
     const-string v3, "setStarted"
 
@@ -562,7 +562,7 @@
 
     .line 1673
     :goto_3
-    const v3, 0x1020354
+    const v3, 0xc020479
 
     if-eqz v10, :cond_10
 
@@ -572,7 +572,7 @@
     invoke-virtual {v1, v3, v2}, Landroid/widget/RemoteViews;->setViewVisibility(II)V
 
     .line 1674
-    const v3, 0x102035a
+    const v3, 0xc020483
 
     if-eqz v10, :cond_11
 
@@ -624,7 +624,7 @@
     if-le v2, v13, :cond_8
 
     .line 1615
-    const v2, 0x1020356
+    const v2, 0xc020473
 
     move-object/from16 v0, p0
 
@@ -644,7 +644,7 @@
 
     .line 1621
     :goto_6
-    const v2, 0x1020356
+    const v2, 0xc020473
 
     const/4 v3, 0x0
 
@@ -664,7 +664,7 @@
 
     .line 1619
     .local v7, f:Ljava/text/NumberFormat;
-    const v2, 0x1020356
+    const v2, 0xc020473
 
     move-object/from16 v0, p0
 
@@ -684,7 +684,7 @@
     .end local v7           #f:Ljava/text/NumberFormat;
     .end local v13           #tooBig:I
     :cond_9
-    const v2, 0x1020356
+    const v2, 0xc020473
 
     const/16 v3, 0x8
 
@@ -704,7 +704,7 @@
 
     .line 1638
     :cond_b
-    const v2, 0x1020015
+    const v2, 0xc020476
 
     const/16 v3, 0x8
 
@@ -765,14 +765,14 @@
 
     .line 1667
     :cond_e
-    const v2, 0x1020064
+    const v2, 0xc020472
 
     const/4 v3, 0x0
 
     invoke-virtual {v1, v2, v3}, Landroid/widget/RemoteViews;->setViewVisibility(II)V
 
     .line 1668
-    const v2, 0x1020064
+    const v2, 0xc020472
 
     const-string v3, "setTime"
 
@@ -786,7 +786,7 @@
 
     .line 1671
     :cond_f
-    const v2, 0x1020064
+    const v2, 0xc020472
 
     const/16 v3, 0x8
 
@@ -812,7 +812,7 @@
     .parameter "layoutId"
 
     .prologue
-    const v6, 0x102034f
+    const v6, 0xc020484
 
     const/4 v5, 0x0
 
@@ -837,7 +837,7 @@
     invoke-virtual {v1, v6, v5}, Landroid/widget/RemoteViews;->setViewVisibility(II)V
 
     .line 1685
-    const v4, 0x1020358
+    const v4, 0xc020486
 
     invoke-virtual {v1, v4, v5}, Landroid/widget/RemoteViews;->setViewVisibility(II)V
 
@@ -1133,35 +1133,60 @@
     .parameter "action"
 
     .prologue
-    const v1, 0x102034e
+    const/4 v2, 0x1
+
+    const v1, 0xc020487
 
     const/4 v3, 0x0
 
-    iget-object v2, p1, Landroid/app/Notification$Action;->actionIntent:Landroid/app/PendingIntent;
+    .line 1754
+    iget-object v4, p1, Landroid/app/Notification$Action;->actionIntent:Landroid/app/PendingIntent;
 
-    if-nez v2, :cond_1
+    if-nez v4, :cond_2
 
-    const/4 v6, 0x1
+    move v6, v2
 
     .line 1755
     .local v6, tombstone:Z
     :goto_0
     new-instance v0, Landroid/widget/RemoteViews;
 
+    iget-object v4, p0, Landroid/app/Notification$Builder;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v4}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+
+    move-result-object v5
+
+    if-eqz v6, :cond_3
+
+    const v4, 0xc090422
+
+    :goto_1
+    invoke-direct {v0, v5, v4}, Landroid/widget/RemoteViews;-><init>(Ljava/lang/String;I)V
+
+    .line 1763
+    .local v0, button:Landroid/widget/RemoteViews;
+    iget v4, p1, Landroid/app/Notification$Action;->actionKind:I
+
+    if-ne v4, v2, :cond_0
+
+    .line 1764
+    new-instance v0, Landroid/widget/RemoteViews;
+
+    .end local v0           #button:Landroid/widget/RemoteViews;
     iget-object v2, p0, Landroid/app/Notification$Builder;->mContext:Landroid/content/Context;
 
     invoke-virtual {v2}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
 
-    move-result-object v4
+    move-result-object v2
 
-    if-eqz v6, :cond_2
+    const v4, 0xc090427
 
-    const v2, 0x1090090
+    invoke-direct {v0, v2, v4}, Landroid/widget/RemoteViews;-><init>(Ljava/lang/String;I)V
 
-    :goto_1
-    invoke-direct {v0, v4, v2}, Landroid/widget/RemoteViews;-><init>(Ljava/lang/String;I)V
-
-    .local v0, button:Landroid/widget/RemoteViews;
+    .line 1767
+    .restart local v0       #button:Landroid/widget/RemoteViews;
+    :cond_0
     iget v2, p1, Landroid/app/Notification$Action;->icon:I
 
     move v4, v3
@@ -1176,7 +1201,7 @@
     invoke-virtual {v0, v1, v2}, Landroid/widget/RemoteViews;->setTextViewText(ILjava/lang/CharSequence;)V
 
     .line 1769
-    if-nez v6, :cond_0
+    if-nez v6, :cond_1
 
     .line 1770
     iget-object v2, p1, Landroid/app/Notification$Action;->actionIntent:Landroid/app/PendingIntent;
@@ -1184,7 +1209,7 @@
     invoke-virtual {v0, v1, v2}, Landroid/widget/RemoteViews;->setOnClickPendingIntent(ILandroid/app/PendingIntent;)V
 
     .line 1772
-    :cond_0
+    :cond_1
     iget-object v2, p1, Landroid/app/Notification$Action;->title:Ljava/lang/CharSequence;
 
     invoke-virtual {v0, v1, v2}, Landroid/widget/RemoteViews;->setContentDescription(ILjava/lang/CharSequence;)V
@@ -1194,7 +1219,7 @@
 
     .end local v0           #button:Landroid/widget/RemoteViews;
     .end local v6           #tombstone:Z
-    :cond_1
+    :cond_2
     move v6, v3
 
     .line 1754
@@ -1202,8 +1227,8 @@
 
     .line 1755
     .restart local v6       #tombstone:Z
-    :cond_2
-    const v2, 0x109008e
+    :cond_3
+    const v4, 0xc090423
 
     goto :goto_1
 .end method
@@ -1233,7 +1258,7 @@
     return-object v0
 
     :cond_0
-    const v0, 0x1090093
+    const v0, 0xc090421
 
     invoke-direct {p0, v0}, Landroid/app/Notification$Builder;->applyStandardTemplateWithActions(I)Landroid/widget/RemoteViews;
 
@@ -1264,7 +1289,7 @@
     return-object v0
 
     :cond_0
-    const v0, 0x1090092
+    const v0, 0xc09041a
 
     const/4 v1, 0x1
 
@@ -1307,7 +1332,7 @@
 
     if-nez v0, :cond_1
 
-    const v0, 0x1090116
+    const v0, 0xc09041c
 
     :goto_1
     const/4 v1, 0x1
@@ -1319,7 +1344,7 @@
     goto :goto_0
 
     :cond_1
-    const v0, 0x1090117
+    const v0, 0xc09041d
 
     goto :goto_1
 

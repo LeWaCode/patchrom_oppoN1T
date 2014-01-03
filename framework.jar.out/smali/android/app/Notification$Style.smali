@@ -83,11 +83,11 @@
     .end annotation
 
     .prologue
-    const v8, 0x102035a
+    const v8, 0xc020483
 
-    const v7, 0x1020355
+    const v7, 0xc020479
 
-    const v6, 0x1020353
+    const v6, 0xc020477
 
     const/16 v5, 0x8
 
@@ -150,7 +150,7 @@
     if-eqz v1, :cond_3
 
     .line 1910
-    const v2, 0x1020046
+    const v2, 0xc020435
 
     invoke-virtual {v0, v2, v1}, Landroid/widget/RemoteViews;->setTextViewText(ILjava/lang/CharSequence;)V
 

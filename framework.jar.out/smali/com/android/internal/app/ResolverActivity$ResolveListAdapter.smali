@@ -235,7 +235,7 @@
 
     iget-object v5, p2, Lcom/android/internal/app/ResolverActivity$DisplayResolveInfo;->ri:Landroid/content/pm/ResolveInfo;
 
-    invoke-virtual {v4, v5}, Lcom/android/internal/app/ResolverActivity;->oppoLoadIconForResolveInfo(Landroid/content/pm/ResolveInfo;)Landroid/graphics/drawable/Drawable;
+    invoke-static {v4, v5}, Lcom/android/internal/app/ResolverActivity$Injector;->loadIconForResolveInfo(Lcom/android/internal/app/ResolverActivity;Landroid/content/pm/ResolveInfo;)Landroid/graphics/drawable/Drawable;
 
     move-result-object v4
 

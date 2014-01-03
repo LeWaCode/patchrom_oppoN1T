@@ -54,7 +54,7 @@
     .end annotation
 
     .prologue
-    const v7, 0x1020357
+    const v7, 0xc02047b
 
     const/4 v2, 0x0
 
@@ -90,7 +90,7 @@
     invoke-static {v1, v3}, Landroid/app/Notification$Builder;->access$702(Landroid/app/Notification$Builder;Ljava/lang/CharSequence;)Ljava/lang/CharSequence;
 
     .line 2080
-    const v1, 0x1090095
+    const v1, 0xc09041f
 
     invoke-virtual {p0, v1}, Landroid/app/Notification$BigTextStyle;->getStandardView(I)Landroid/widget/RemoteViews;
 
@@ -101,7 +101,7 @@
     if-eqz v6, :cond_0
 
     .line 2085
-    const v1, 0x1020353
+    const v1, 0xc020477
 
     move v3, v2
 
@@ -121,7 +121,7 @@
     invoke-virtual {v0, v7, v2}, Landroid/widget/RemoteViews;->setViewVisibility(II)V
 
     .line 2090
-    const v1, 0x1020015
+    const v1, 0xc020476
 
     const/16 v2, 0x8
 

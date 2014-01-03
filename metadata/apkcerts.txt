@@ -206,7 +206,7 @@ name="UserDictionaryProvider.apk" certificate="build/target/product/security/sha
 name="VideoGallery.apk" certificate="build/target/product/security/media.x509.pem" private_key="build/target/product/security/media.pk8"
 name="VistorMode.apk" certificate="build/target/product/security/platform.x509.pem" private_key="build/target/product/security/platform.pk8"
 name="VisualizationWallpapers.apk" certificate="PRESIGNED" private_key=""
-name="VoiceAssistant.apk" certificate="PRESIGNED" private_key=""
+name="BaiduVoiceAssistant.apk" certificate="PRESIGNED" private_key=""
 name="VpnDialogs.apk" certificate="build/target/product/security/platform.x509.pem" private_key="build/target/product/security/platform.pk8"
 name="WfdClient.apk" certificate="build/target/product/security/platform.x509.pem" private_key="build/target/product/security/platform.pk8"
 name="WfdP2pService.apk" certificate="build/target/product/security/platform.x509.pem" private_key="build/target/product/security/platform.pk8"
