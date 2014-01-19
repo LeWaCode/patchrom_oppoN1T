@@ -316,6 +316,9 @@
 .method public setRightActionButtonDrawable(Landroid/graphics/drawable/Drawable;)V
     .locals 0
     .parameter "drawable"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
 
     .prologue
     return-void
@@ -324,9 +327,22 @@
 .method public setRightActionButtonResource(I)V
     .locals 0
     .parameter "resId"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
 
     .prologue
-    .line 124
+    return-void
+.end method
+
+.method public setRightActionButtonVisibility(I)V
+    .locals 0
+    .parameter "visibility"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+
+    .prologue
     return-void
 .end method
 

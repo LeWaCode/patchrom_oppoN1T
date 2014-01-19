@@ -12964,10 +12964,8 @@
     .parameter "displayId"
     .parameter "overrideConfiguration"
     .parameter "compInfo"
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_CODE:Landroid/annotation/OppoHook$OppoHookType;
-        note = "Yaojun.Luo@Plf.Framework.SDK : Modify for rom theme"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
 
     .prologue
@@ -13129,9 +13127,12 @@
     .line 1724
     :cond_5
     :goto_3
-    invoke-static {v0, v2, v1, p4}, Landroid/content/res/OppoClassFactory;->newResources(Landroid/content/res/AssetManager;Landroid/util/DisplayMetrics;Landroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;)Landroid/content/res/Resources;
+    new-instance v6, Landroid/content/res/LewaResources;
 
-    move-result-object v6
+    .end local v6           #r:Landroid/content/res/Resources;
+    invoke-direct {v6, v0, v2, v1, p4}, Landroid/content/res/LewaResources;-><init>(Landroid/content/res/AssetManager;Landroid/util/DisplayMetrics;Landroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;)V
+
+    .restart local v6       #r:Landroid/content/res/Resources;
 
     .line 1732
     iget-object v9, p0, Landroid/app/ActivityThread;->mPackages:Ljava/util/HashMap;
@@ -13258,58 +13259,68 @@
     goto :goto_1
 .end method
 
+.method getTopLevelResources(Ljava/lang/String;Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/app/LoadedApk;)Landroid/content/res/Resources;
+    .locals 6
+    .parameter "packageName"
+    .parameter "resDir"
+    .parameter "displayId"
+    .parameter "overrideConfiguration"
+    .parameter "pkgInfo"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p5, Landroid/app/LoadedApk;->mCompatibilityInfo:Landroid/view/CompatibilityInfoHolder;
+
+    invoke-virtual {v0}, Landroid/view/CompatibilityInfoHolder;->get()Landroid/content/res/CompatibilityInfo;
+
+    move-result-object v5
+
+    move-object v0, p0
+
+    move-object v1, p1
+
+    move-object v2, p2
+
+    move v3, p3
+
+    move-object v4, p4
+
+    invoke-virtual/range {v0 .. v5}, Landroid/app/ActivityThread;->getTopLevelResources(Ljava/lang/String;Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;)Landroid/content/res/Resources;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
 .method getTopLevelResources(Ljava/lang/String;Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;)Landroid/content/res/Resources;
-    .locals 2
+    .locals 3
     .parameter "packageName"
     .parameter "resDir"
     .parameter "displayId"
     .parameter "overrideConfiguration"
     .parameter "compInfo"
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->NEW_METHOD:Landroid/annotation/OppoHook$OppoHookType;
-        note = "Yaojun.Luo@Plf.Framework.SDK: Modify for rom theme"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
 
     .prologue
-    .line 5160
     invoke-virtual {p0, p2, p3, p4, p5}, Landroid/app/ActivityThread;->getTopLevelResources(Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;)Landroid/content/res/Resources;
 
-    move-result-object v0
+    move-result-object v1
 
-    .line 5162
-    .local v0, r:Landroid/content/res/Resources;
-    if-eqz v0, :cond_0
+    .local v1, resources:Landroid/content/res/Resources;
+    const/4 v0, 0x0
 
-    .line 5165
-    if-eqz p1, :cond_1
+    .local v0, isThemeCompatibilityModeEnabled:Z
+    move-object v2, v1
 
-    const-string v1, "com.android.systemui"
+    check-cast v2, Landroid/content/res/LewaResources;
 
-    invoke-virtual {p1, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v2, p1, v0}, Landroid/content/res/LewaResources;->init(Ljava/lang/String;Z)V
 
-    move-result v1
-
-    if-eqz v1, :cond_1
-
-    .line 5166
-    const/4 v1, 0x1
-
-    invoke-virtual {v0, v1}, Landroid/content/res/Resources;->setThemeChangeEnable(Z)V
-
-    .line 5171
-    :goto_0
-    invoke-virtual {v0, p1}, Landroid/content/res/Resources;->init(Ljava/lang/String;)V
-
-    .line 5173
-    :cond_0
-    return-object v0
-
-    .line 5168
-    :cond_1
-    invoke-virtual {v0, p1}, Landroid/content/res/Resources;->setThemeChangeEnable(Ljava/lang/String;)V
-
-    goto :goto_0
+    return-object v1
 .end method
 
 .method final handleActivityConfigurationChanged(Landroid/os/IBinder;)V

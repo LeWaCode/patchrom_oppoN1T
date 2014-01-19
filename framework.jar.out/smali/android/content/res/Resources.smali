@@ -325,12 +325,10 @@
     return-void
 .end method
 
-.method constructor <init>()V
+.method public constructor <init>()V
     .locals 3
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_CODE_AND_ACCESS:Landroid/annotation/OppoHook$OppoHookType;
-        note = "Yaojun.Luo@Plf.SDK : [-private] Modify for rom theme"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_ACCESS:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
 
     .prologue
@@ -852,10 +850,8 @@
 
 .method static clearPreloadedCache()V
     .locals 1
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->NEW_METHOD:Landroid/annotation/OppoHook$OppoHookType;
-        note = "Yaojun.Luo@Plf.SDK : Add for rom theme"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
 
     .prologue
@@ -1261,10 +1257,8 @@
 
 .method public static getSystem()Landroid/content/res/Resources;
     .locals 3
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_CODE:Landroid/annotation/OppoHook$OppoHookType;
-        note = "Yaojun.Luo@Plf.SDK : Modify for rom theme"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
 
     .prologue
@@ -1281,12 +1275,12 @@
     .local v0, ret:Landroid/content/res/Resources;
     if-nez v0, :cond_0
 
-    .line 244
-    invoke-static {}, Landroid/content/res/OppoClassFactory;->newResources()Landroid/content/res/Resources;
+    new-instance v0, Landroid/content/res/LewaResources;
 
-    move-result-object v0
+    .end local v0           #ret:Landroid/content/res/Resources;
+    invoke-direct {v0}, Landroid/content/res/LewaResources;-><init>()V
 
-    .line 246
+    .restart local v0       #ret:Landroid/content/res/Resources;
     sput-object v0, Landroid/content/res/Resources;->mSystem:Landroid/content/res/Resources;
 
     .line 249
@@ -4518,10 +4512,8 @@
     .locals 17
     .parameter "value"
     .parameter "id"
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_CODE:Landroid/annotation/OppoHook$OppoHookType;
-        note = "Yaojun.Luo@Plf.SDK : Modify for rom theme"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
 
     .annotation system Ldalvik/annotation/Throws;
@@ -4584,6 +4576,10 @@
     .line 2059
     .local v3, dr:Landroid/graphics/drawable/Drawable;
     if-eqz v3, :cond_3
+
+    move/from16 v0, p2
+
+    invoke-static {v3, v0}, Landroid/content/res/Resources$Injector;->setDrawableResId(Landroid/graphics/drawable/Drawable;I)V
 
     move-object v4, v3
 
@@ -4703,6 +4699,10 @@
 
     :cond_5
     :goto_5
+    move/from16 v0, p2
+
+    invoke-static {v3, v0}, Landroid/content/res/Resources$Injector;->setDrawableResId(Landroid/graphics/drawable/Drawable;I)V
+
     move-object v4, v3
 
     .line 2162
@@ -4927,13 +4927,15 @@
 
     .line 2120
     .local v7, is:Ljava/io/InputStream;
+    invoke-static/range {p2 .. p2}, Landroid/content/res/Resources$Injector;->setDrawableId(I)V
+
     const/4 v13, 0x0
 
     move-object/from16 v0, p0
 
     move-object/from16 v1, p1
 
-    invoke-static {v0, v1, v7, v6, v13}, Landroid/graphics/drawable/Drawable;->createFromResourceStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/drawable/Drawable;
+    invoke-static {v0, v1, v7, v6, v13}, Landroid/content/res/Resources$Injector;->createFromResourceStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/drawable/Drawable;
 
     move-result-object v3
 
@@ -5059,6 +5061,20 @@
     .catchall {:try_start_3 .. :try_end_3} :catchall_0
 
     goto :goto_6
+.end method
+
+.method loadOverlayDrawable(Landroid/util/TypedValue;I)Landroid/graphics/drawable/Drawable;
+    .locals 1
+    .parameter "value"
+    .parameter "id"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+
+    .prologue
+    const/4 v0, 0x0
+
+    return-object v0
 .end method
 
 .method public loadIcon(I)Landroid/graphics/drawable/Drawable;
@@ -5288,193 +5304,6 @@
 
     goto :goto_2
 
-    :catch_3
-    move-exception v7
-
-    goto :goto_1
-.end method
-
-.method public loadOverlayDrawable(Landroid/util/TypedValue;I)Landroid/graphics/drawable/Drawable;
-    .locals 8
-    .parameter "value"
-    .parameter "id"
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->NEW_METHOD:Landroid/annotation/OppoHook$OppoHookType;
-        note = "Yaojun.Luo@Plf.SDK : Add for rom theme"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
-    .end annotation
-
-    .prologue
-    .line 2548
-    iget-boolean v6, p0, Landroid/content/res/Resources;->mThemeChangeEnable:Z
-
-    if-nez v6, :cond_1
-
-    const/4 v0, 0x0
-
-    .line 2574
-    :cond_0
-    :goto_0
-    return-object v0
-
-    .line 2549
-    :cond_1
-    const/4 v0, 0x0
-
-    .line 2550
-    .local v0, drawable:Landroid/graphics/drawable/Drawable;
-    iget-object v6, p0, Landroid/content/res/Resources;->mSkipFiles:Landroid/util/SparseArray;
-
-    invoke-virtual {v6, p2}, Landroid/util/SparseArray;->get(I)Ljava/lang/Object;
-
-    move-result-object v6
-
-    if-nez v6, :cond_0
-
-    iget-object v6, p0, Landroid/content/res/Resources;->mThemeResources:Loppo/content/res/OppoThemeResources;
-
-    if-eqz v6, :cond_0
-
-    .line 2551
-    iget-object v6, p1, Landroid/util/TypedValue;->string:Ljava/lang/CharSequence;
-
-    invoke-virtual {v6}, Ljava/lang/Object;->toString()Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 2552
-    .local v4, path:Ljava/lang/String;
-    iget-object v6, p0, Landroid/content/res/Resources;->mThemeResources:Loppo/content/res/OppoThemeResources;
-
-    iget v7, p1, Landroid/util/TypedValue;->assetCookie:I
-
-    invoke-direct {p0, v7}, Landroid/content/res/Resources;->getCookieType(I)I
-
-    move-result v7
-
-    invoke-virtual {v6, v7, v4}, Loppo/content/res/OppoThemeResources;->getThemeFileStream(ILjava/lang/String;)Loppo/content/res/OppoThemeZipFile$ThemeFileInfo;
-
-    move-result-object v5
-
-    .line 2553
-    .local v5, themeFileInfo:Loppo/content/res/OppoThemeZipFile$ThemeFileInfo;
-    if-nez v5, :cond_2
-
-    .line 2554
-    iget-object v6, p0, Landroid/content/res/Resources;->mSkipFiles:Landroid/util/SparseArray;
-
-    const/4 v7, 0x1
-
-    invoke-static {v7}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
-
-    move-result-object v7
-
-    invoke-virtual {v6, p2, v7}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
-
-    goto :goto_0
-
-    .line 2559
-    :cond_2
-    :try_start_0
-    new-instance v3, Landroid/graphics/BitmapFactory$Options;
-
-    invoke-direct {v3}, Landroid/graphics/BitmapFactory$Options;-><init>()V
-
-    .line 2560
-    .local v3, options:Landroid/graphics/BitmapFactory$Options;
-    iget v6, v5, Loppo/content/res/OppoThemeZipFile$ThemeFileInfo;->mDensity:I
-
-    iput v6, v3, Landroid/graphics/BitmapFactory$Options;->inDensity:I
-
-    .line 2561
-    iget-object v1, v5, Loppo/content/res/OppoThemeZipFile$ThemeFileInfo;->mInput:Ljava/io/InputStream;
-
-    .line 2562
-    .local v1, input:Ljava/io/InputStream;
-    invoke-static {p0, p1, v1, v4, v3}, Landroid/graphics/drawable/Drawable;->createFromResourceStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/drawable/Drawable;
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-    .catch Ljava/lang/OutOfMemoryError; {:try_start_0 .. :try_end_0} :catch_1
-
-    move-result-object v0
-
-    .line 2567
-    if-eqz v5, :cond_0
-
-    .line 2568
-    :try_start_1
-    iget-object v6, v5, Loppo/content/res/OppoThemeZipFile$ThemeFileInfo;->mInput:Ljava/io/InputStream;
-
-    invoke-virtual {v6}, Ljava/io/InputStream;->close()V
-    :try_end_1
-    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_0
-
-    goto :goto_0
-
-    .line 2570
-    :catch_0
-    move-exception v6
-
-    goto :goto_0
-
-    .line 2563
-    .end local v1           #input:Ljava/io/InputStream;
-    .end local v3           #options:Landroid/graphics/BitmapFactory$Options;
-    :catch_1
-    move-exception v2
-
-    .line 2564
-    .local v2, localOutOfMemoryError:Ljava/lang/OutOfMemoryError;
-    :try_start_2
-    const-string v6, "Resources"
-
-    const-string/jumbo v7, "out of memory !!"
-
-    invoke-static {v6, v7}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_2
-    .catchall {:try_start_2 .. :try_end_2} :catchall_0
-
-    .line 2567
-    if-eqz v5, :cond_0
-
-    .line 2568
-    :try_start_3
-    iget-object v6, v5, Loppo/content/res/OppoThemeZipFile$ThemeFileInfo;->mInput:Ljava/io/InputStream;
-
-    invoke-virtual {v6}, Ljava/io/InputStream;->close()V
-    :try_end_3
-    .catch Ljava/lang/Exception; {:try_start_3 .. :try_end_3} :catch_2
-
-    goto :goto_0
-
-    .line 2570
-    :catch_2
-    move-exception v6
-
-    goto :goto_0
-
-    .line 2566
-    .end local v2           #localOutOfMemoryError:Ljava/lang/OutOfMemoryError;
-    :catchall_0
-    move-exception v6
-
-    .line 2567
-    if-eqz v5, :cond_3
-
-    .line 2568
-    :try_start_4
-    iget-object v7, v5, Loppo/content/res/OppoThemeZipFile$ThemeFileInfo;->mInput:Ljava/io/InputStream;
-
-    invoke-virtual {v7}, Ljava/io/InputStream;->close()V
-    :try_end_4
-    .catch Ljava/lang/Exception; {:try_start_4 .. :try_end_4} :catch_3
-
-    .line 2571
-    :cond_3
-    :goto_1
-    throw v6
-
-    .line 2570
     :catch_3
     move-exception v7
 
@@ -5863,8 +5692,11 @@
     throw v7
 .end method
 
-.method public final newTheme()Landroid/content/res/Resources$Theme;
+.method public newTheme()Landroid/content/res/Resources$Theme;
     .locals 1
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_ACCESS:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
 
     .prologue
     .line 1464
@@ -6151,15 +5983,9 @@
 .end method
 
 .method public openRawResource(ILandroid/util/TypedValue;)Ljava/io/InputStream;
-    .locals 7
+    .locals 6
     .parameter "id"
     .parameter "value"
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->NEW_METHOD:Landroid/annotation/OppoHook$OppoHookType;
-        note = "XiaoKang.Feng@Plf.SDK : Modify for rom theme"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
-    .end annotation
-
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/content/res/Resources$NotFoundException;
@@ -6167,65 +5993,14 @@
     .end annotation
 
     .prologue
-    .line 986
-    const/4 v3, 0x1
+    const/4 v2, 0x1
 
-    invoke-virtual {p0, p1, p2, v3}, Landroid/content/res/Resources;->getValue(ILandroid/util/TypedValue;Z)V
+    invoke-virtual {p0, p1, p2, v2}, Landroid/content/res/Resources;->getValue(ILandroid/util/TypedValue;Z)V
 
-    .line 990
-    invoke-virtual {p0, p1, p2}, Landroid/content/res/Resources;->openOppoThemeRawResource(ILandroid/util/TypedValue;)Ljava/io/InputStream;
-
-    move-result-object v1
-
-    .line 991
-    .local v1, input:Ljava/io/InputStream;
-    if-eqz v1, :cond_0
-
-    .line 996
-    .end local v1           #input:Ljava/io/InputStream;
-    :goto_0
-    return-object v1
-
-    .restart local v1       #input:Ljava/io/InputStream;
-    :cond_0
     :try_start_0
-    iget-object v3, p0, Landroid/content/res/Resources;->mAssets:Landroid/content/res/AssetManager;
+    iget-object v2, p0, Landroid/content/res/Resources;->mAssets:Landroid/content/res/AssetManager;
 
-    iget v4, p2, Landroid/util/TypedValue;->assetCookie:I
-
-    iget-object v5, p2, Landroid/util/TypedValue;->string:Ljava/lang/CharSequence;
-
-    invoke-virtual {v5}, Ljava/lang/Object;->toString()Ljava/lang/String;
-
-    move-result-object v5
-
-    const/4 v6, 0x2
-
-    invoke-virtual {v3, v4, v5, v6}, Landroid/content/res/AssetManager;->openNonAsset(ILjava/lang/String;I)Ljava/io/InputStream;
-    :try_end_0
-    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
-
-    move-result-object v1
-
-    goto :goto_0
-
-    .line 998
-    :catch_0
-    move-exception v0
-
-    .line 999
-    .local v0, e:Ljava/lang/Exception;
-    new-instance v2, Landroid/content/res/Resources$NotFoundException;
-
-    new-instance v3, Ljava/lang/StringBuilder;
-
-    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v4, "File "
-
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v3
+    iget v3, p2, Landroid/util/TypedValue;->assetCookie:I
 
     iget-object v4, p2, Landroid/util/TypedValue;->string:Ljava/lang/CharSequence;
 
@@ -6233,36 +6008,66 @@
 
     move-result-object v4
 
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    const/4 v5, 0x2
+
+    invoke-virtual {v2, v3, v4, v5}, Landroid/content/res/AssetManager;->openNonAsset(ILjava/lang/String;I)Ljava/io/InputStream;
+    :try_end_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result-object v2
+
+    return-object v2
+
+    :catch_0
+    move-exception v0
+
+    .local v0, e:Ljava/lang/Exception;
+    new-instance v1, Landroid/content/res/Resources$NotFoundException;
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "File "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    iget-object v3, p2, Landroid/util/TypedValue;->string:Ljava/lang/CharSequence;
+
+    invoke-virtual {v3}, Ljava/lang/Object;->toString()Ljava/lang/String;
 
     move-result-object v3
 
-    const-string v4, " from drawable resource ID #0x"
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    move-result-object v2
 
-    move-result-object v3
+    const-string v3, " from drawable resource ID #0x"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
 
     invoke-static {p1}, Ljava/lang/Integer;->toHexString(I)Ljava/lang/String;
 
-    move-result-object v4
-
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
     move-result-object v3
 
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v3
+    move-result-object v2
 
-    invoke-direct {v2, v3}, Landroid/content/res/Resources$NotFoundException;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    .line 1001
-    .local v2, rnf:Landroid/content/res/Resources$NotFoundException;
-    invoke-virtual {v2, v0}, Landroid/content/res/Resources$NotFoundException;->initCause(Ljava/lang/Throwable;)Ljava/lang/Throwable;
+    move-result-object v2
 
-    .line 1002
-    throw v2
+    invoke-direct {v1, v2}, Landroid/content/res/Resources$NotFoundException;-><init>(Ljava/lang/String;)V
+
+    .local v1, rnf:Landroid/content/res/Resources$NotFoundException;
+    invoke-virtual {v1, v0}, Landroid/content/res/Resources$NotFoundException;->initCause(Ljava/lang/Throwable;)Ljava/lang/Throwable;
+
+    throw v1
 .end method
 
 .method public openRawResourceFd(I)Landroid/content/res/AssetFileDescriptor;

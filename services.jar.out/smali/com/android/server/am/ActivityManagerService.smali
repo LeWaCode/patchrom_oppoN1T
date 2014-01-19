@@ -11996,9 +11996,13 @@
     .locals 3
     .parameter "pid"
     .parameter "uid"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
 
     .prologue
-    .line 2603
+    invoke-static {p0, p2}, Lcom/android/server/am/ActivityManagerService$Injector;->checkFlashlightState(Lcom/android/server/am/ActivityManagerService;I)V
+
     iget-object v2, p0, Lcom/android/server/am/ActivityManagerService;->mProcessObservers:Landroid/os/RemoteCallbackList;
 
     invoke-virtual {v2}, Landroid/os/RemoteCallbackList;->beginBroadcast()I
@@ -22855,6 +22859,413 @@
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     goto :goto_1
+.end method
+
+.method final removeDyingProviderLocked(Lcom/android/server/am/ProcessRecord;Lcom/android/server/am/ContentProviderRecord;Z)Z
+    .locals 12
+    .parameter "proc"
+    .parameter "cpr"
+    .parameter "always"
+    .annotation build Landroid/annotation/OppoHook;
+        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_ACCESS:Landroid/annotation/OppoHook$OppoHookType;
+        note = "ZhiYong.Lin@Plf.Framework modify for BPM"
+        property = .enum Landroid/annotation/OppoHook$OppoRomType;->OPPO:Landroid/annotation/OppoHook$OppoRomType;
+    .end annotation
+
+    .prologue
+    const/4 v11, 0x1
+
+    .line 11045
+    iget-object v6, p0, Lcom/android/server/am/ActivityManagerService;->mLaunchingProviders:Ljava/util/ArrayList;
+
+    invoke-virtual {v6, p2}, Ljava/util/ArrayList;->contains(Ljava/lang/Object;)Z
+
+    move-result v3
+
+    .line 11047
+    .local v3, inLaunching:Z
+    if-eqz v3, :cond_0
+
+    if-eqz p3, :cond_1
+
+    .line 11048
+    :cond_0
+    monitor-enter p2
+
+    .line 11049
+    const/4 v6, 0x0
+
+    :try_start_0
+    iput-object v6, p2, Lcom/android/server/am/ContentProviderRecord;->launchingApp:Lcom/android/server/am/ProcessRecord;
+
+    .line 11050
+    invoke-virtual {p2}, Ljava/lang/Object;->notifyAll()V
+
+    .line 11051
+    monitor-exit p2
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    .line 11052
+    iget-object v6, p0, Lcom/android/server/am/ActivityManagerService;->mProviderMap:Lcom/android/server/am/ProviderMap;
+
+    iget-object v7, p2, Lcom/android/server/am/ContentProviderRecord;->name:Landroid/content/ComponentName;
+
+    iget v8, p2, Lcom/android/server/am/ContentProviderRecord;->uid:I
+
+    invoke-static {v8}, Landroid/os/UserHandle;->getUserId(I)I
+
+    move-result v8
+
+    invoke-virtual {v6, v7, v8}, Lcom/android/server/am/ProviderMap;->removeProviderByClass(Landroid/content/ComponentName;I)V
+
+    .line 11053
+    iget-object v6, p2, Lcom/android/server/am/ContentProviderRecord;->info:Landroid/content/pm/ProviderInfo;
+
+    iget-object v6, v6, Landroid/content/pm/ProviderInfo;->authority:Ljava/lang/String;
+
+    const-string v7, ";"
+
+    invoke-virtual {v6, v7}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
+
+    move-result-object v5
+
+    .line 11054
+    .local v5, names:[Ljava/lang/String;
+    const/4 v4, 0x0
+
+    .local v4, j:I
+    :goto_0
+    array-length v6, v5
+
+    if-ge v4, v6, :cond_1
+
+    .line 11055
+    iget-object v6, p0, Lcom/android/server/am/ActivityManagerService;->mProviderMap:Lcom/android/server/am/ProviderMap;
+
+    aget-object v7, v5, v4
+
+    iget v8, p2, Lcom/android/server/am/ContentProviderRecord;->uid:I
+
+    invoke-static {v8}, Landroid/os/UserHandle;->getUserId(I)I
+
+    move-result v8
+
+    invoke-virtual {v6, v7, v8}, Lcom/android/server/am/ProviderMap;->removeProviderByName(Ljava/lang/String;I)V
+
+    .line 11054
+    add-int/lit8 v4, v4, 0x1
+
+    goto :goto_0
+
+    .line 11051
+    .end local v4           #j:I
+    .end local v5           #names:[Ljava/lang/String;
+    :catchall_0
+    move-exception v6
+
+    :try_start_1
+    monitor-exit p2
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    throw v6
+
+    .line 11059
+    :cond_1
+    const/4 v2, 0x0
+
+    .local v2, i:I
+    :goto_1
+    iget-object v6, p2, Lcom/android/server/am/ContentProviderRecord;->connections:Ljava/util/ArrayList;
+
+    invoke-virtual {v6}, Ljava/util/ArrayList;->size()I
+
+    move-result v6
+
+    if-ge v2, v6, :cond_6
+
+    .line 11060
+    iget-object v6, p2, Lcom/android/server/am/ContentProviderRecord;->connections:Ljava/util/ArrayList;
+
+    invoke-virtual {v6, v2}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Lcom/android/server/am/ContentProviderConnection;
+
+    .line 11061
+    .local v1, conn:Lcom/android/server/am/ContentProviderConnection;
+    iget-boolean v6, v1, Lcom/android/server/am/ContentProviderConnection;->waiting:Z
+
+    if-eqz v6, :cond_3
+
+    .line 11065
+    if-eqz v3, :cond_3
+
+    if-nez p3, :cond_3
+
+    .line 11059
+    :cond_2
+    :goto_2
+    add-int/lit8 v2, v2, 0x1
+
+    goto :goto_1
+
+    .line 11069
+    :cond_3
+    iget-object v0, v1, Lcom/android/server/am/ContentProviderConnection;->client:Lcom/android/server/am/ProcessRecord;
+
+    .line 11070
+    .local v0, capp:Lcom/android/server/am/ProcessRecord;
+    iput-boolean v11, v1, Lcom/android/server/am/ContentProviderConnection;->dead:Z
+
+    .line 11071
+    iget v6, v1, Lcom/android/server/am/ContentProviderConnection;->stableCount:I
+
+    if-lez v6, :cond_5
+
+    invoke-static {p2}, Lcom/android/server/am/ActivityManagerService$Injector;->skipForLewa(Lcom/android/server/am/ContentProviderRecord;)Z
+
+    move-result v6
+
+    if-eqz v6, :cond_5
+
+    iget-boolean v6, v0, Lcom/android/server/am/ProcessRecord;->persistent:Z
+
+    if-nez v6, :cond_2
+
+    iget-object v6, v0, Lcom/android/server/am/ProcessRecord;->thread:Landroid/app/IApplicationThread;
+
+    if-eqz v6, :cond_2
+
+    iget v6, v0, Lcom/android/server/am/ProcessRecord;->pid:I
+
+    if-eqz v6, :cond_2
+
+    iget v6, v0, Lcom/android/server/am/ProcessRecord;->pid:I
+
+    sget v7, Lcom/android/server/am/ActivityManagerService;->MY_PID:I
+
+    if-eq v6, v7, :cond_2
+
+    .line 11075
+    const-string v7, "ActivityManager"
+
+    new-instance v6, Ljava/lang/StringBuilder;
+
+    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v8, "Kill "
+
+    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    iget-object v8, v0, Lcom/android/server/am/ProcessRecord;->processName:Ljava/lang/String;
+
+    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    const-string v8, " (pid "
+
+    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    iget v8, v0, Lcom/android/server/am/ProcessRecord;->pid:I
+
+    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    const-string v8, "): provider "
+
+    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    iget-object v8, p2, Lcom/android/server/am/ContentProviderRecord;->info:Landroid/content/pm/ProviderInfo;
+
+    iget-object v8, v8, Landroid/content/pm/ProviderInfo;->name:Ljava/lang/String;
+
+    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    const-string v8, " in dying process "
+
+    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v8
+
+    if-eqz p1, :cond_4
+
+    iget-object v6, p1, Lcom/android/server/am/ProcessRecord;->processName:Ljava/lang/String;
+
+    :goto_3
+    invoke-virtual {v8, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v6
+
+    invoke-static {v7, v6}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 11078
+    const/16 v6, 0x7547
+
+    const/4 v7, 0x5
+
+    new-array v7, v7, [Ljava/lang/Object;
+
+    const/4 v8, 0x0
+
+    iget v9, v0, Lcom/android/server/am/ProcessRecord;->userId:I
+
+    invoke-static {v9}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v9
+
+    aput-object v9, v7, v8
+
+    iget v8, v0, Lcom/android/server/am/ProcessRecord;->pid:I
+
+    invoke-static {v8}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v8
+
+    aput-object v8, v7, v11
+
+    const/4 v8, 0x2
+
+    iget-object v9, v0, Lcom/android/server/am/ProcessRecord;->processName:Ljava/lang/String;
+
+    aput-object v9, v7, v8
+
+    const/4 v8, 0x3
+
+    iget v9, v0, Lcom/android/server/am/ProcessRecord;->setAdj:I
+
+    invoke-static {v9}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v9
+
+    aput-object v9, v7, v8
+
+    const/4 v8, 0x4
+
+    new-instance v9, Ljava/lang/StringBuilder;
+
+    invoke-direct {v9}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v10, "dying provider "
+
+    invoke-virtual {v9, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v9
+
+    iget-object v10, p2, Lcom/android/server/am/ContentProviderRecord;->name:Landroid/content/ComponentName;
+
+    invoke-virtual {v10}, Landroid/content/ComponentName;->toShortString()Ljava/lang/String;
+
+    move-result-object v10
+
+    invoke-virtual {v9, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v9
+
+    invoke-virtual {v9}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v9
+
+    aput-object v9, v7, v8
+
+    invoke-static {v6, v7}, Landroid/util/EventLog;->writeEvent(I[Ljava/lang/Object;)I
+
+    .line 11081
+    iget v6, v0, Lcom/android/server/am/ProcessRecord;->pid:I
+
+    invoke-static {v6}, Landroid/os/Process;->killProcessQuiet(I)V
+
+    goto/16 :goto_2
+
+    .line 11075
+    :cond_4
+    const-string v6, "??"
+
+    goto :goto_3
+
+    .line 11083
+    :cond_5
+    iget-object v6, v0, Lcom/android/server/am/ProcessRecord;->thread:Landroid/app/IApplicationThread;
+
+    if-eqz v6, :cond_2
+
+    iget-object v6, v1, Lcom/android/server/am/ContentProviderConnection;->provider:Lcom/android/server/am/ContentProviderRecord;
+
+    iget-object v6, v6, Lcom/android/server/am/ContentProviderRecord;->provider:Landroid/content/IContentProvider;
+
+    if-eqz v6, :cond_2
+
+    .line 11085
+    :try_start_2
+    iget-object v6, v0, Lcom/android/server/am/ProcessRecord;->thread:Landroid/app/IApplicationThread;
+
+    iget-object v7, v1, Lcom/android/server/am/ContentProviderConnection;->provider:Lcom/android/server/am/ContentProviderRecord;
+
+    iget-object v7, v7, Lcom/android/server/am/ContentProviderRecord;->provider:Landroid/content/IContentProvider;
+
+    invoke-interface {v7}, Landroid/content/IContentProvider;->asBinder()Landroid/os/IBinder;
+
+    move-result-object v7
+
+    invoke-interface {v6, v7}, Landroid/app/IApplicationThread;->unstableProviderDied(Landroid/os/IBinder;)V
+    :try_end_2
+    .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_0
+
+    .line 11090
+    :goto_4
+    iget-object v6, p2, Lcom/android/server/am/ContentProviderRecord;->connections:Ljava/util/ArrayList;
+
+    invoke-virtual {v6, v2}, Ljava/util/ArrayList;->remove(I)Ljava/lang/Object;
+
+    .line 11091
+    iget-object v6, v1, Lcom/android/server/am/ContentProviderConnection;->client:Lcom/android/server/am/ProcessRecord;
+
+    iget-object v6, v6, Lcom/android/server/am/ProcessRecord;->conProviders:Ljava/util/ArrayList;
+
+    invoke-virtual {v6, v1}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
+
+    goto/16 :goto_2
+
+    .line 11095
+    .end local v0           #capp:Lcom/android/server/am/ProcessRecord;
+    .end local v1           #conn:Lcom/android/server/am/ContentProviderConnection;
+    :cond_6
+    if-eqz v3, :cond_7
+
+    if-eqz p3, :cond_7
+
+    .line 11096
+    iget-object v6, p0, Lcom/android/server/am/ActivityManagerService;->mLaunchingProviders:Ljava/util/ArrayList;
+
+    invoke-virtual {v6, p2}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
+
+    .line 11098
+    :cond_7
+    return v3
+
+    .line 11086
+    .restart local v0       #capp:Lcom/android/server/am/ProcessRecord;
+    .restart local v1       #conn:Lcom/android/server/am/ContentProviderConnection;
+    :catch_0
+    move-exception v6
+
+    goto :goto_4
 .end method
 
 .method private final removeProcessLocked(Lcom/android/server/am/ProcessRecord;ZZLjava/lang/String;)Z
@@ -46534,6 +46945,18 @@
     return-object v0
 .end method
 
+.method getContext()Landroid/content/Context;
+    .locals 1
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/am/ActivityManagerService;->mContext:Landroid/content/Context;
+
+    return-object v0
+.end method
+
 .method public getCurrentUser()Landroid/content/pm/UserInfo;
     .locals 3
 
@@ -50654,7 +51077,7 @@
 .end method
 
 .method getUiContext()Landroid/content/Context;
-    .locals 1
+    .locals 2
     .annotation build Landroid/annotation/LewaHook;
         value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
@@ -50662,48 +51085,58 @@
     .prologue
     monitor-enter p0
 
+    const/4 v0, 0x0
+
+    .local v0, context:Landroid/content/Context;
     :try_start_0
-    iget-object v0, p0, Lcom/android/server/am/ActivityManagerService;->mUiContext:Landroid/content/Context;
+    iget-object v1, p0, Lcom/android/server/am/ActivityManagerService;->mUiContext:Landroid/content/Context;
 
-    if-nez v0, :cond_0
+    if-nez v1, :cond_0
 
-    iget-boolean v0, p0, Lcom/android/server/am/ActivityManagerService;->mBooted:Z
+    iget-boolean v1, p0, Lcom/android/server/am/ActivityManagerService;->mBooted:Z
 
-    if-eqz v0, :cond_0
+    if-eqz v1, :cond_0
 
-    iget-object v0, p0, Lcom/android/server/am/ActivityManagerService;->mContext:Landroid/content/Context;
+    iget-object v1, p0, Lcom/android/server/am/ActivityManagerService;->mContext:Landroid/content/Context;
 
-    invoke-static {v0}, Lcom/android/internal/app/ThemeUtils;->createUiContext(Landroid/content/Context;)Landroid/content/Context;
+    invoke-static {v1}, Lcom/android/internal/app/ThemeUtils;->createUiContext(Landroid/content/Context;)Landroid/content/Context;
 
-    move-result-object v0
+    move-result-object v1
 
-    iput-object v0, p0, Lcom/android/server/am/ActivityManagerService;->mUiContext:Landroid/content/Context;
+    iput-object v1, p0, Lcom/android/server/am/ActivityManagerService;->mUiContext:Landroid/content/Context;
 
     :cond_0
-    iget-object v0, p0, Lcom/android/server/am/ActivityManagerService;->mUiContext:Landroid/content/Context;
+    iget-object v1, p0, Lcom/android/server/am/ActivityManagerService;->mUiContext:Landroid/content/Context;
 
-    if-eqz v0, :cond_1
+    if-eqz v1, :cond_2
 
     iget-object v0, p0, Lcom/android/server/am/ActivityManagerService;->mUiContext:Landroid/content/Context;
 
     :goto_0
+    if-eqz v0, :cond_1
+
+    const v1, 0x9030010
+
+    invoke-virtual {v0, v1}, Landroid/content/Context;->setTheme(I)V
+
+    :cond_1
     monitor-exit p0
 
     return-object v0
 
-    :cond_1
+    :cond_2
     iget-object v0, p0, Lcom/android/server/am/ActivityManagerService;->mContext:Landroid/content/Context;
 
     goto :goto_0
 
     :catchall_0
-    move-exception v0
+    move-exception v1
 
     monitor-exit p0
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    throw v0
+    throw v1
 .end method
 
 .method public getUidForIntentSender(Landroid/content/IIntentSender;)I
@@ -58883,408 +59316,6 @@
     return-void
 .end method
 
-.method final removeDyingProviderLocked(Lcom/android/server/am/ProcessRecord;Lcom/android/server/am/ContentProviderRecord;Z)Z
-    .locals 12
-    .parameter "proc"
-    .parameter "cpr"
-    .parameter "always"
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_ACCESS:Landroid/annotation/OppoHook$OppoHookType;
-        note = "ZhiYong.Lin@Plf.Framework modify for BPM"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->OPPO:Landroid/annotation/OppoHook$OppoRomType;
-    .end annotation
-
-    .prologue
-    const/4 v11, 0x1
-
-    .line 11045
-    iget-object v6, p0, Lcom/android/server/am/ActivityManagerService;->mLaunchingProviders:Ljava/util/ArrayList;
-
-    invoke-virtual {v6, p2}, Ljava/util/ArrayList;->contains(Ljava/lang/Object;)Z
-
-    move-result v3
-
-    .line 11047
-    .local v3, inLaunching:Z
-    if-eqz v3, :cond_0
-
-    if-eqz p3, :cond_1
-
-    .line 11048
-    :cond_0
-    monitor-enter p2
-
-    .line 11049
-    const/4 v6, 0x0
-
-    :try_start_0
-    iput-object v6, p2, Lcom/android/server/am/ContentProviderRecord;->launchingApp:Lcom/android/server/am/ProcessRecord;
-
-    .line 11050
-    invoke-virtual {p2}, Ljava/lang/Object;->notifyAll()V
-
-    .line 11051
-    monitor-exit p2
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    .line 11052
-    iget-object v6, p0, Lcom/android/server/am/ActivityManagerService;->mProviderMap:Lcom/android/server/am/ProviderMap;
-
-    iget-object v7, p2, Lcom/android/server/am/ContentProviderRecord;->name:Landroid/content/ComponentName;
-
-    iget v8, p2, Lcom/android/server/am/ContentProviderRecord;->uid:I
-
-    invoke-static {v8}, Landroid/os/UserHandle;->getUserId(I)I
-
-    move-result v8
-
-    invoke-virtual {v6, v7, v8}, Lcom/android/server/am/ProviderMap;->removeProviderByClass(Landroid/content/ComponentName;I)V
-
-    .line 11053
-    iget-object v6, p2, Lcom/android/server/am/ContentProviderRecord;->info:Landroid/content/pm/ProviderInfo;
-
-    iget-object v6, v6, Landroid/content/pm/ProviderInfo;->authority:Ljava/lang/String;
-
-    const-string v7, ";"
-
-    invoke-virtual {v6, v7}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
-
-    move-result-object v5
-
-    .line 11054
-    .local v5, names:[Ljava/lang/String;
-    const/4 v4, 0x0
-
-    .local v4, j:I
-    :goto_0
-    array-length v6, v5
-
-    if-ge v4, v6, :cond_1
-
-    .line 11055
-    iget-object v6, p0, Lcom/android/server/am/ActivityManagerService;->mProviderMap:Lcom/android/server/am/ProviderMap;
-
-    aget-object v7, v5, v4
-
-    iget v8, p2, Lcom/android/server/am/ContentProviderRecord;->uid:I
-
-    invoke-static {v8}, Landroid/os/UserHandle;->getUserId(I)I
-
-    move-result v8
-
-    invoke-virtual {v6, v7, v8}, Lcom/android/server/am/ProviderMap;->removeProviderByName(Ljava/lang/String;I)V
-
-    .line 11054
-    add-int/lit8 v4, v4, 0x1
-
-    goto :goto_0
-
-    .line 11051
-    .end local v4           #j:I
-    .end local v5           #names:[Ljava/lang/String;
-    :catchall_0
-    move-exception v6
-
-    :try_start_1
-    monitor-exit p2
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
-
-    throw v6
-
-    .line 11059
-    :cond_1
-    const/4 v2, 0x0
-
-    .local v2, i:I
-    :goto_1
-    iget-object v6, p2, Lcom/android/server/am/ContentProviderRecord;->connections:Ljava/util/ArrayList;
-
-    invoke-virtual {v6}, Ljava/util/ArrayList;->size()I
-
-    move-result v6
-
-    if-ge v2, v6, :cond_6
-
-    .line 11060
-    iget-object v6, p2, Lcom/android/server/am/ContentProviderRecord;->connections:Ljava/util/ArrayList;
-
-    invoke-virtual {v6, v2}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
-
-    move-result-object v1
-
-    check-cast v1, Lcom/android/server/am/ContentProviderConnection;
-
-    .line 11061
-    .local v1, conn:Lcom/android/server/am/ContentProviderConnection;
-    iget-boolean v6, v1, Lcom/android/server/am/ContentProviderConnection;->waiting:Z
-
-    if-eqz v6, :cond_3
-
-    .line 11065
-    if-eqz v3, :cond_3
-
-    if-nez p3, :cond_3
-
-    .line 11059
-    :cond_2
-    :goto_2
-    add-int/lit8 v2, v2, 0x1
-
-    goto :goto_1
-
-    .line 11069
-    :cond_3
-    iget-object v0, v1, Lcom/android/server/am/ContentProviderConnection;->client:Lcom/android/server/am/ProcessRecord;
-
-    .line 11070
-    .local v0, capp:Lcom/android/server/am/ProcessRecord;
-    iput-boolean v11, v1, Lcom/android/server/am/ContentProviderConnection;->dead:Z
-
-    .line 11071
-    iget v6, v1, Lcom/android/server/am/ContentProviderConnection;->stableCount:I
-
-    if-lez v6, :cond_5
-
-    .line 11072
-    iget-boolean v6, v0, Lcom/android/server/am/ProcessRecord;->persistent:Z
-
-    if-nez v6, :cond_2
-
-    iget-object v6, v0, Lcom/android/server/am/ProcessRecord;->thread:Landroid/app/IApplicationThread;
-
-    if-eqz v6, :cond_2
-
-    iget v6, v0, Lcom/android/server/am/ProcessRecord;->pid:I
-
-    if-eqz v6, :cond_2
-
-    iget v6, v0, Lcom/android/server/am/ProcessRecord;->pid:I
-
-    sget v7, Lcom/android/server/am/ActivityManagerService;->MY_PID:I
-
-    if-eq v6, v7, :cond_2
-
-    .line 11075
-    const-string v7, "ActivityManager"
-
-    new-instance v6, Ljava/lang/StringBuilder;
-
-    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v8, "Kill "
-
-    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v6
-
-    iget-object v8, v0, Lcom/android/server/am/ProcessRecord;->processName:Ljava/lang/String;
-
-    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v6
-
-    const-string v8, " (pid "
-
-    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v6
-
-    iget v8, v0, Lcom/android/server/am/ProcessRecord;->pid:I
-
-    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    move-result-object v6
-
-    const-string v8, "): provider "
-
-    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v6
-
-    iget-object v8, p2, Lcom/android/server/am/ContentProviderRecord;->info:Landroid/content/pm/ProviderInfo;
-
-    iget-object v8, v8, Landroid/content/pm/ProviderInfo;->name:Ljava/lang/String;
-
-    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v6
-
-    const-string v8, " in dying process "
-
-    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v8
-
-    if-eqz p1, :cond_4
-
-    iget-object v6, p1, Lcom/android/server/am/ProcessRecord;->processName:Ljava/lang/String;
-
-    :goto_3
-    invoke-virtual {v8, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v6
-
-    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v6
-
-    invoke-static {v7, v6}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 11078
-    const/16 v6, 0x7547
-
-    const/4 v7, 0x5
-
-    new-array v7, v7, [Ljava/lang/Object;
-
-    const/4 v8, 0x0
-
-    iget v9, v0, Lcom/android/server/am/ProcessRecord;->userId:I
-
-    invoke-static {v9}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v9
-
-    aput-object v9, v7, v8
-
-    iget v8, v0, Lcom/android/server/am/ProcessRecord;->pid:I
-
-    invoke-static {v8}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v8
-
-    aput-object v8, v7, v11
-
-    const/4 v8, 0x2
-
-    iget-object v9, v0, Lcom/android/server/am/ProcessRecord;->processName:Ljava/lang/String;
-
-    aput-object v9, v7, v8
-
-    const/4 v8, 0x3
-
-    iget v9, v0, Lcom/android/server/am/ProcessRecord;->setAdj:I
-
-    invoke-static {v9}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v9
-
-    aput-object v9, v7, v8
-
-    const/4 v8, 0x4
-
-    new-instance v9, Ljava/lang/StringBuilder;
-
-    invoke-direct {v9}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v10, "dying provider "
-
-    invoke-virtual {v9, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v9
-
-    iget-object v10, p2, Lcom/android/server/am/ContentProviderRecord;->name:Landroid/content/ComponentName;
-
-    invoke-virtual {v10}, Landroid/content/ComponentName;->toShortString()Ljava/lang/String;
-
-    move-result-object v10
-
-    invoke-virtual {v9, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v9
-
-    invoke-virtual {v9}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v9
-
-    aput-object v9, v7, v8
-
-    invoke-static {v6, v7}, Landroid/util/EventLog;->writeEvent(I[Ljava/lang/Object;)I
-
-    .line 11081
-    iget v6, v0, Lcom/android/server/am/ProcessRecord;->pid:I
-
-    invoke-static {v6}, Landroid/os/Process;->killProcessQuiet(I)V
-
-    goto/16 :goto_2
-
-    .line 11075
-    :cond_4
-    const-string v6, "??"
-
-    goto :goto_3
-
-    .line 11083
-    :cond_5
-    iget-object v6, v0, Lcom/android/server/am/ProcessRecord;->thread:Landroid/app/IApplicationThread;
-
-    if-eqz v6, :cond_2
-
-    iget-object v6, v1, Lcom/android/server/am/ContentProviderConnection;->provider:Lcom/android/server/am/ContentProviderRecord;
-
-    iget-object v6, v6, Lcom/android/server/am/ContentProviderRecord;->provider:Landroid/content/IContentProvider;
-
-    if-eqz v6, :cond_2
-
-    .line 11085
-    :try_start_2
-    iget-object v6, v0, Lcom/android/server/am/ProcessRecord;->thread:Landroid/app/IApplicationThread;
-
-    iget-object v7, v1, Lcom/android/server/am/ContentProviderConnection;->provider:Lcom/android/server/am/ContentProviderRecord;
-
-    iget-object v7, v7, Lcom/android/server/am/ContentProviderRecord;->provider:Landroid/content/IContentProvider;
-
-    invoke-interface {v7}, Landroid/content/IContentProvider;->asBinder()Landroid/os/IBinder;
-
-    move-result-object v7
-
-    invoke-interface {v6, v7}, Landroid/app/IApplicationThread;->unstableProviderDied(Landroid/os/IBinder;)V
-    :try_end_2
-    .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_0
-
-    .line 11090
-    :goto_4
-    iget-object v6, p2, Lcom/android/server/am/ContentProviderRecord;->connections:Ljava/util/ArrayList;
-
-    invoke-virtual {v6, v2}, Ljava/util/ArrayList;->remove(I)Ljava/lang/Object;
-
-    .line 11091
-    iget-object v6, v1, Lcom/android/server/am/ContentProviderConnection;->client:Lcom/android/server/am/ProcessRecord;
-
-    iget-object v6, v6, Lcom/android/server/am/ProcessRecord;->conProviders:Ljava/util/ArrayList;
-
-    invoke-virtual {v6, v1}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
-
-    goto/16 :goto_2
-
-    .line 11095
-    .end local v0           #capp:Lcom/android/server/am/ProcessRecord;
-    .end local v1           #conn:Lcom/android/server/am/ContentProviderConnection;
-    :cond_6
-    if-eqz v3, :cond_7
-
-    if-eqz p3, :cond_7
-
-    .line 11096
-    iget-object v6, p0, Lcom/android/server/am/ActivityManagerService;->mLaunchingProviders:Ljava/util/ArrayList;
-
-    invoke-virtual {v6, p2}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
-
-    .line 11098
-    :cond_7
-    return v3
-
-    .line 11086
-    .restart local v0       #capp:Lcom/android/server/am/ProcessRecord;
-    .restart local v1       #conn:Lcom/android/server/am/ContentProviderConnection;
-    :catch_0
-    move-exception v6
-
-    goto :goto_4
-.end method
-
 .method removeReceiverLocked(Lcom/android/server/am/ReceiverList;)V
     .locals 4
     .parameter "rl"
@@ -66471,14 +66502,13 @@
 .method public systemReady(Ljava/lang/Runnable;)V
     .locals 45
     .parameter "goingCallback"
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_CODE:Landroid/annotation/OppoHook$OppoHookType;
-        note = "wanglan modify for cmcc control, ZhiYong.Lin modify for statusbar tansparent, some code for BPM only OPPO"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
 
     .prologue
-    .line 8065
+    invoke-static/range {p0 .. p0}, Lcom/android/server/am/ActivityManagerService$Injector;->setTorchState(Lcom/android/server/am/ActivityManagerService;)V
+
     monitor-enter p0
 
     .line 8066
