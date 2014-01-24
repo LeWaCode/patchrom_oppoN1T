@@ -3494,7 +3494,7 @@
 .method updateSystemUiVisibilityLw()I
     .locals 7
     .annotation build Landroid/annotation/LewaHook;
-        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE_AND_ACCESS:Landroid/annotation/LewaHook$LewaHookType;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
 
     .prologue
@@ -4680,6 +4680,7 @@
 
     iput v0, v1, Lcom/android/internal/policy/impl/PhoneWindowManager;->mRestrictedScreenHeight:I
 
+    invoke-static/range {p0 .. p0}, Lcom/android/internal/policy/impl/PhoneWindowManager$Injector;->setScreenSize(Lcom/android/internal/policy/impl/PhoneWindowManager;)V
     .line 2643
     const/4 v2, 0x0
 
@@ -5763,6 +5764,20 @@
     invoke-direct {p0}, Lcom/android/internal/policy/impl/PhoneWindowManager;->updateLockScreenTimeout()V
 
     return-void
+.end method
+
+.method callUpdateSystemUiVisibilityLw()I
+    .locals 1
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->NEW_METHOD:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
+
+    .prologue
+    invoke-virtual {p0}, Lcom/android/internal/policy/impl/PhoneWindowManager;->updateSystemUiVisibilityLw()I
+
+    move-result v0
+
+    return v0
 .end method
 
 .method public canBeForceHidden(Landroid/view/WindowManagerPolicy$WindowState;Landroid/view/WindowManager$LayoutParams;)Z
