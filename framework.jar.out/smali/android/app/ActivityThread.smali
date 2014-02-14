@@ -1288,7 +1288,7 @@
     if-eqz v9, :cond_1
 
     .line 2240
-    invoke-virtual {v2, v9}, Landroid/content/Context;->setTheme(I)V
+    #invoke-virtual {v2, v9}, Landroid/content/Context;->setTheme(I)V
 
     .line 2243
     :cond_1
