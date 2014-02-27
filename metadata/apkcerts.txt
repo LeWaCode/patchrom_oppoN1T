@@ -212,3 +212,5 @@ name="WfdClient.apk" certificate="build/target/product/security/platform.x509.pe
 name="WfdP2pService.apk" certificate="build/target/product/security/platform.x509.pem" private_key="build/target/product/security/platform.pk8"
 name="WfdService.apk" certificate="build/target/product/security/platform.x509.pem" private_key="build/target/product/security/platform.pk8"
 name="Wiper.apk" certificate="build/target/product/security/platform.x509.pem" private_key="build/target/product/security/platform.pk8"
+name="SogouInput.apk" certificate="PRESIGNED" private_key=""
+name="LewaSensorProvider.apk" certificate="build/target/product/security/platform.x509.pem" private_key="build/target/product/security/platform.pk8"
