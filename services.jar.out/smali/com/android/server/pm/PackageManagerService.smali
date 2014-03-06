@@ -10063,6 +10063,12 @@
 
     .line 4975
     :cond_b
+    invoke-static/range {p1 .. p1}, Lcom/android/server/pm/PackageManagerService$Injector;->grantPermissionForLewa(Landroid/content/pm/PackageParser$Package;)Z
+
+    move-result v19
+
+    or-int v4, v4, v19
+
     if-nez v4, :cond_c
 
     iget v0, v6, Lcom/android/server/pm/BasePermission;->protectionLevel:I
@@ -10166,10 +10172,6 @@
     .line 5008
     :cond_d
     :goto_9
-    move-object/from16 v0, p1
-
-    invoke-static {v0, v4}, Lcom/android/server/pm/PackageManagerService$Injector;->grantPermissionForLewa(Landroid/content/pm/PackageParser$Package;Z)V
-
     if-eqz v4, :cond_4
 
     .line 5014

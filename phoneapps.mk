@@ -14,3 +14,4 @@ private-phone-apps := OppoCamera \
                       VpnDialogs \
                       UserDictionaryProvider \
                       VideoGallery \
+                      LewaPond
