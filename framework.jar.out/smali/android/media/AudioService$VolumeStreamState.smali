@@ -1135,6 +1135,9 @@
 
 .method public declared-synchronized readSettings()V
     .locals 13
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
 
     .prologue
     .line 2919
@@ -1328,6 +1331,12 @@
 
     if-eqz v0, :cond_4
 
+    invoke-static {}, Landroid/media/AudioService$Injector;->isInvalidIndex()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_4
+
     iget-object v0, p0, Landroid/media/AudioService$VolumeStreamState;->this$0:Landroid/media/AudioService;
 
     #getter for: Landroid/media/AudioService;->mStreamVolumeAlias:[I
@@ -1409,6 +1418,12 @@
 
     #getter for: Landroid/media/AudioService;->mVoiceCapable:Z
     invoke-static {v0}, Landroid/media/AudioService;->access$3500(Landroid/media/AudioService;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_5
+
+    invoke-static {}, Landroid/media/AudioService$Injector;->isInvalidIndex()Z
 
     move-result v0
 
