@@ -411,6 +411,9 @@
 .method public apply(Lcom/android/internal/app/AlertController;)V
     .locals 6
     .parameter "dialog"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
+    .end annotation
 
     .prologue
     const/4 v3, 0x0
@@ -540,6 +543,10 @@
     .line 885
     :cond_8
     :goto_1
+    iget-object v0, p0, Lcom/android/internal/app/AlertController$AlertParams;->mContext:Landroid/content/Context;
+
+    invoke-static {v0, p1}, Lcom/android/internal/app/AlertController$Injector;->setListViewSelector(Landroid/content/Context;Lcom/android/internal/app/AlertController;)V
+
     return-void
 
     .line 833

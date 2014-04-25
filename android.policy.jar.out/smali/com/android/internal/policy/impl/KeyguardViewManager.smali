@@ -1481,7 +1481,7 @@
 
     .line 190
     .local v8, stretch:I
-    const v4, 0x100900
+    const v4, 0x100500
 
     .line 195
     .local v4, flags:I

@@ -1587,9 +1587,9 @@
 
     iget-boolean v0, p0, Landroid/content/pm/ApplicationInfo;->isThemeable:Z
 
-    if-eqz v0, :cond_1
+    if-eqz v0, :cond_lewa_0
 
-    :goto_1
+    :goto_lewa_0
     invoke-virtual {p1, v1}, Landroid/os/Parcel;->writeInt(I)V
 
     return-void
@@ -1599,8 +1599,8 @@
 
     goto :goto_0
 
-    :cond_1
+    :cond_lewa_0
     move v1, v2
 
-    goto :goto_1
+    goto :goto_lewa_0
 .end method

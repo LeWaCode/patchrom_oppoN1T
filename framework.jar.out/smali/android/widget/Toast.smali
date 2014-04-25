@@ -6,7 +6,8 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Landroid/widget/Toast$TN;
+        Landroid/widget/Toast$TN;,
+        Landroid/widget/Toast$Injector;
     }
 .end annotation
 
@@ -140,9 +141,8 @@
     .parameter "context"
     .parameter "text"
     .parameter "duration"
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_CODE:Landroid/annotation/OppoHook$OppoHookType;
-        note = "change the Toast\'s UI to oppo style"
+    .annotation build Landroid/annotation/LewaHook;
+        value = .enum Landroid/annotation/LewaHook$LewaHookType;->CHANGE_CODE:Landroid/annotation/LewaHook$LewaHookType;
     .end annotation
 
     .prologue
@@ -164,6 +164,10 @@
     .line 248
     .local v0, inflate:Landroid/view/LayoutInflater;
     const v4, 0x1090127
+
+    invoke-static {v4}, Landroid/widget/Toast$Injector;->getResourceId(I)I
+
+    move-result v4
 
     const/4 v5, 0x0
 

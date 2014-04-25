@@ -430,7 +430,7 @@
 
 .field private mVolumeControlStream:I
 
-.field private mVolumePanel:Landroid/view/VolumePanel;
+.field private mVolumePanel:Llewa/view/VolumePanel;
 
 
 # direct methods
@@ -1079,11 +1079,11 @@
 
     sput v0, Landroid/media/AudioService;->sSoundEffectVolumeDb:I
 
-    new-instance v0, Landroid/view/VolumePanel;
+    new-instance v0, Llewa/view/VolumePanel;
 
-    invoke-direct {v0, p1, p0}, Landroid/view/VolumePanel;-><init>(Landroid/content/Context;Landroid/media/AudioService;)V
+    invoke-direct {v0, p1, p0}, Llewa/view/VolumePanel;-><init>(Landroid/content/Context;Landroid/media/AudioService;)V
 
-    iput-object v0, p0, Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
+    iput-object v0, p0, Landroid/media/AudioService;->mVolumePanel:Llewa/view/VolumePanel;
 
     const/4 v0, 0x0
 
@@ -2710,9 +2710,9 @@
 
     .line 6145
     :cond_1
-    iget-object v2, p0, Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
+    iget-object v2, p0, Landroid/media/AudioService;->mVolumePanel:Llewa/view/VolumePanel;
 
-    invoke-virtual {v2, p1, p3}, Landroid/view/VolumePanel;->postRemoteVolumeChanged(II)V
+    invoke-virtual {v2, p1, p3}, Llewa/view/VolumePanel;->postRemoteVolumeChanged(II)V
 
     goto :goto_0
 
@@ -3295,9 +3295,9 @@
 
     if-le p2, v0, :cond_0
 
-    iget-object v0, p0, Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
+    iget-object v0, p0, Landroid/media/AudioService;->mVolumePanel:Llewa/view/VolumePanel;
 
-    invoke-virtual {v0}, Landroid/view/VolumePanel;->postDisplaySafeVolumeWarning()V
+    invoke-virtual {v0}, Llewa/view/VolumePanel;->postDisplaySafeVolumeWarning()V
 
     .line 6485
     const/4 v0, 0x0
@@ -8203,9 +8203,9 @@
 
     iput v0, p0, Landroid/media/AudioService;->mMusicActiveMs:I
 
-    iget-object v0, p0, Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
+    iget-object v0, p0, Landroid/media/AudioService;->mVolumePanel:Llewa/view/VolumePanel;
 
-    invoke-virtual {v0}, Landroid/view/VolumePanel;->postDisplaySafeVolumeWarning()V
+    invoke-virtual {v0}, Llewa/view/VolumePanel;->postDisplaySafeVolumeWarning()V
 
     .line 2538
     .end local v7           #device:I
@@ -8521,9 +8521,9 @@
 
     iput p3, v2, Landroid/media/AudioService$RemotePlaybackState;->mVolume:I
 
-    iget-object v2, p0, Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
+    iget-object v2, p0, Landroid/media/AudioService;->mVolumePanel:Llewa/view/VolumePanel;
 
-    invoke-virtual {v2}, Landroid/view/VolumePanel;->postHasNewRemotePlaybackInfo()V
+    invoke-virtual {v2}, Llewa/view/VolumePanel;->postHasNewRemotePlaybackInfo()V
 
     .line 6011
     :cond_1
@@ -8565,9 +8565,9 @@
 
     iput p3, v2, Landroid/media/AudioService$RemotePlaybackState;->mVolumeMax:I
 
-    iget-object v2, p0, Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
+    iget-object v2, p0, Landroid/media/AudioService;->mVolumePanel:Llewa/view/VolumePanel;
 
-    invoke-virtual {v2}, Landroid/view/VolumePanel;->postHasNewRemotePlaybackInfo()V
+    invoke-virtual {v2}, Llewa/view/VolumePanel;->postHasNewRemotePlaybackInfo()V
 
     .line 6020
     :cond_2
@@ -8609,9 +8609,9 @@
 
     iput p3, v2, Landroid/media/AudioService$RemotePlaybackState;->mVolumeHandling:I
 
-    iget-object v2, p0, Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
+    iget-object v2, p0, Landroid/media/AudioService;->mVolumePanel:Llewa/view/VolumePanel;
 
-    invoke-virtual {v2}, Landroid/view/VolumePanel;->postHasNewRemotePlaybackInfo()V
+    invoke-virtual {v2}, Llewa/view/VolumePanel;->postHasNewRemotePlaybackInfo()V
 
     .line 6029
     :cond_3
@@ -8987,9 +8987,9 @@
     .line 6248
     iput-boolean v0, p0, Landroid/media/AudioService;->mHasRemotePlayback:Z
 
-    iget-object v3, p0, Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
+    iget-object v3, p0, Landroid/media/AudioService;->mVolumePanel:Llewa/view/VolumePanel;
 
-    invoke-virtual {v3, v0}, Landroid/view/VolumePanel;->postRemoteSliderVisibility(Z)V
+    invoke-virtual {v3, v0}, Llewa/view/VolumePanel;->postRemoteSliderVisibility(Z)V
 
     .line 6251
     :cond_2
@@ -11548,9 +11548,9 @@
     .parameter "flags"
 
     .prologue
-    iget-object v0, p0, Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
+    iget-object v0, p0, Landroid/media/AudioService;->mVolumePanel:Llewa/view/VolumePanel;
 
-    invoke-virtual {v0, p2}, Landroid/view/VolumePanel;->postMasterMuteChanged(I)V
+    invoke-virtual {v0, p2}, Llewa/view/VolumePanel;->postMasterMuteChanged(I)V
 
     .line 1159
     invoke-direct {p0, p1}, Landroid/media/AudioService;->broadcastMasterMuteStatus(Z)V
@@ -11566,9 +11566,9 @@
     .parameter "newVolume"
 
     .prologue
-    iget-object v1, p0, Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
+    iget-object v1, p0, Landroid/media/AudioService;->mVolumePanel:Llewa/view/VolumePanel;
 
-    invoke-virtual {v1, p1}, Landroid/view/VolumePanel;->postMasterVolumeChanged(I)V
+    invoke-virtual {v1, p1}, Llewa/view/VolumePanel;->postMasterVolumeChanged(I)V
 
     .line 1150
     new-instance v0, Landroid/content/Intent;
@@ -11730,9 +11730,9 @@
 
     .line 1133
     :cond_0
-    iget-object v1, p0, Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
+    iget-object v1, p0, Landroid/media/AudioService;->mVolumePanel:Llewa/view/VolumePanel;
 
-    invoke-virtual {v1, p1, p4}, Landroid/view/VolumePanel;->postVolumeChanged(II)V
+    invoke-virtual {v1, p1, p4}, Llewa/view/VolumePanel;->postVolumeChanged(II)V
 
     .line 1135
     and-int/lit8 v1, p4, 0x20
