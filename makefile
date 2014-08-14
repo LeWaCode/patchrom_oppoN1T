@@ -17,7 +17,7 @@ local-modified-apps :=
 local-modified-jars :=
 
 # All apks from LEWA
-local-lewa-removed-apps := Bluetooth LewaPond
+local-lewa-removed-apps := Bluetooth LewaPond LewaGallery2 LewaCamera
 
 local-lewa-modified-apps :=
 
